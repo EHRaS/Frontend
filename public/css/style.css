@@ -1,1 +1,18 @@
-/* YOUR CUSTOM STYLES */
+main {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+.form-control{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#photobox{
+    display: flex;
+    justify-content: center;
+}
+
+#fileFieldContainer{
+    text-align: center;
+}

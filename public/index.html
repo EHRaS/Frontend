@@ -10,15 +10,15 @@
     <title>EHRaS</title>
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/favicons/manifest.json">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="favicons/manifest.json">
+    <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="favicons/favicon.ico">
     <meta name="apple-mobile-web-app-title" content="EHRaS">
     <meta name="application-name" content="EHRaS">
-    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    <meta name="msapplication-config" content="favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Font Awesome -->
@@ -30,15 +30,9 @@
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
 
-    <!-- Template styles -->
-    <style rel="stylesheet">
-        /* TEMPLATE STYLES */
+    <!-- Material Design Bootstrap -->
+    <link href="css/style.css" rel="stylesheet">
 
-        main {
-            padding-top: 3rem;
-            padding-bottom: 2rem;
-        }
-    </style>
 
 </head>
 
@@ -64,13 +58,19 @@
                     <!--Links-->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link">Basic Data <span class="sr-only">(current)</span></a>
+                            <a class="nav-link">Save Patient</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">Medications</a>
+                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#basicTab').tab('show')">Basic Data</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">Lab Results</a>
+                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#medicationTab').tab('show')">Medication</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#diagnosticsTab').tab('show')">Diagnostics</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#additionalTab').tab('show')">Additional Data</a>
                         </li>
                         <li class="nav-item btn-group">
                             <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
@@ -80,10 +80,6 @@
                             </div>
                         </li>
                     </ul>
-                    <!--Search form-->
-                    <!-- <form class="form-inline">
-                        <input class="form-control" type="text" placeholder="Search">
-                    </form> -->
                 </div>
                 <!--/.Collapse content-->
 
@@ -102,18 +98,94 @@
             <div class="tab-content">
 
                 <!--Panel 1-->
-                <div class="tab-pane fade in show active" id="panel11" role="tabpanel">
-                    <br>
+                <div class="tab-pane fade in show active" id="basicTab" role="tabpanel">
+                    <h2>Basic Patient Data</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Personal Information</h4>
+                                    <hr>
+                                    <div class="md-form">
+                                        <input type="text" id="idNumber" class="form-control" value="64ef367018099de4d4183ffa3bc0848a" disabled>
+                                        <label for="idNumber" class="disabled">ID:</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-sm-6">
+                                            <div class="md-form">
+                                                <input type="text" id="fname" class="form-control">
+                                                <label for="fname" class="">First Name</label>
+                                            </div>
+                                            <div class="md-form">
+                                                <input type="text" id="lname" class="form-control">
+                                                <label for="form1" class="">Last Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col col-sm-6">
+                                            <div class="md-form">
+                                                <input type="text" id="title" class="form-control">
+                                                <label for="form1" class="">Title</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-sm-12">
+                                            <div class="md-form">
+                                                <textarea type="text" id="idCharacteristics" class="md-textarea"></textarea>
+                                                <label for="idCharacteristics">Identifying Characteristics</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Identity</h4>
+                                    <form id="photoUpload">
+                                        <div class="file-field" id="fileFieldContainer">
+                                            <div class="btn btn-primary btn-sm">
+                                                <span>Upload Photo</span>
+                                                <input type="file" id="photoUpload">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div id="photobox">
+                                        <figure>
+                                            <img src="https://www.placecage.com/c/300/300">
+                                            <figcaption>Photo taken: <span id="photoDate">2016-01-01</span></figcaption>
+                                            <figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr>
+                            <h4>Critical Data</h4>
+                            <hr>
+                            <div class="md-form">
+                                <textarea type="text" id="criticalAllergies" class="md-textarea"></textarea>
+                                <label for="criticalAllergies">Allergies</label>
+                            </div>
+                            <div class="md-form">
+                                <textarea type="text" id="criticalMisc" class="md-textarea"></textarea>
+                                <label for="criticalMisc">Misc. Information</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <!--/.Panel 1-->
 
                 <!--Panel 2-->
-                <div class="tab-pane fade" id="panel12" role="tabpanel">
-                    <br>
-
+                <div class="tab-pane fade" id="medicationTab" role="tabpanel">
+                    <h2>Medication Data</h2>
+                    <hr>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
 
@@ -121,21 +193,19 @@
                 <!--/.Panel 2-->
 
                 <!--Panel 3-->
-                <div class="tab-pane fade" id="panel13" role="tabpanel">
-                    <br>
-
+                <div class="tab-pane fade" id="diagnosticsTab" role="tabpanel">
+                    <h2>Diagnostics</h2>
+                    <hr>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-
                 </div>
                 <!--/.Panel 3-->
 
                 <!--Panel 4-->
-                <div class="tab-pane fade" id="panel14" role="tabpanel">
-                    <br>
-
+                <div class="tab-pane fade" id="additionalTab" role="tabpanel">
+                    <h2>Additional Data</h2>
+                    <hr>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-
                 </div>
                 <!--/.Panel 4-->
 
