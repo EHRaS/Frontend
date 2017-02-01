@@ -11,13 +11,13 @@ function uploadProfile(){
     // TODO
     // watch for file upload with js
 
-    $('#photoInput').onchange(){
+    $('#photoInput').onchange(function(){
         // grab file
         // do xhr post request
         // take the ID you get back
         var idYouGot = 0; // server repsonse
         replacePhoto(idYouGot);
-    }
+    });
 
 
     $('#photoInput').click();
@@ -52,6 +52,7 @@ function saveNewHistory(){
     var color = $('[name="newHistoryColor"]:checked').val();
 
     // update backend
+
     var id = 4382; // get this from the server or however you define it -- since it's in our big data blob, probably just a rand hex will do
 
     var collectionItem = document.createElement('li');
@@ -61,7 +62,7 @@ function saveNewHistory(){
     var dateTag = document.createElement('span');
     dateTag.className = 'badge lighten-4' + color;
     dateTag.innerHTML = new Date(); // format this
-    collectionItem.appendChildElement(dateTag);
+    //collectionItem.appendChildElement(dateTag);
 
     var entryDiv = document.createElement('');
 
