@@ -6,13 +6,35 @@ function savePatient(){
 }
 
 function uploadProfile(){
+
     "use strict";
+    // TODO
+    // watch for file upload with js
+
+    $('#photoInput').onchange(){
+        // grab file
+        // do xhr post request
+        // take the ID you get back
+        var idYouGot = 0; // server repsonse
+        replacePhoto(idYouGot);
+    }
+
+
     $('#photoInput').click();
 
     // handle file upload
     // replace image
     Materialize.toast('Image updated', 1000);
 }
+
+function replacePhoto(imgID){
+    "use strict";
+
+    // TODO
+    // replace dom element for photo with response
+    // send XHR get request to image serving endpoint
+}
+
 
 function deleteHistoryEntry(historyID){
     //TODO remove from DOM
