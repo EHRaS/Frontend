@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>EHRaS</title>
@@ -21,233 +21,171 @@
     <meta name="msapplication-config" content="favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet">
-
-    <!-- Material Design Bootstrap -->
-    <link href="css/style.css" rel="stylesheet">
-
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection">
 
 </head>
 
 <body>
-
-
     <header>
-
-        <!--Navbar-->
-        <nav class="navbar navbar-dark primary-color-dark">
-
-            <!-- Collapse button-->
-            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx">
-                <i class="fa fa-bars"></i>
-            </button>
-
-            <div class="container">
-
-                <!--Collapse content-->
-                <div class="collapse navbar-toggleable-xs" id="collapseEx">
-                    <!--Navbar Brand-->
-                    <a class="navbar-brand" href="#" target="_blank">EHRaS</a>
-                    <!--Links-->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link">Save Patient</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#basicTab').tab('show')">Basic Data</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#medicationTab').tab('show')">Medication</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#diagnosticsTab').tab('show')">Diagnostics</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="$('.tab-pane.active').removeClass('active'); $('#additionalTab').tab('show')">Additional Data</a>
-                        </li>
-                        <li class="nav-item btn-group">
-                            <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item">Close Patient</a>
-                                <a class="dropdown-item">Load Patient</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Collapse content-->
-
+        <nav class="nav-extended">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">EHRaS</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">Save Patient</a></li>
+                    <li><a href="#">Close Patient</a></li>
+                    <li><a href="#">Loa Patient</a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="#">Save Patient</a></li>
+                    <li class="divider">
+                        <li>
+                            <li><a href="#">Close Patient</a></li>
+                            <li><a href="#">Loa Patient</a></li>
+                </ul>
             </div>
-
+            <div class="nav-content">
+                <ul class="tabs tabs-transparent">
+                    <li class="tab" class="active"><a href="#basicTab">Basics</a></li>
+                    <li class="tab"><a href="#medicationTab">Meds</a></li>
+                    <li class="tab"><a href="#diagnosticsTab">Diag.</a></li>
+                    <li class="tab"><a href="#additionalTab">Addtl.</a></li>
+                </ul>
+            </div>
         </nav>
-        <!--/.Navbar-->
-
     </header>
 
-    <main>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red" onclick="savePatient();">
+            <i class="large material-icons">done</i>
+        </a>
+    </div>
 
-        <!--Main layout-->
-        <div class="container">
-            <!-- Tab panels -->
-            <div class="tab-content">
+    <div class="row tabTop" id="basicTab">
+        <div class="col s12">
+            <div class="container">
+                <h4 class="tabTitle" id="patientFullName">Patient Name</h4>
+                <div id="photoBox">
+                    <img src="http://placecage.com/300/300" /><br />
+                    <input type="file" id="photoInput">
+                    <span>Image uploaded 2016-01-01 | <a onclick="uploadProfile();">Replace Image</a></span>
+                    <hr class="additionalBottomMargin" />
+                </div>
+                <div class="input-field col m6 s12">
+                    <input id="id" type="text" value="64ef367018099de4d4183ffa3bc0848a" disabled>
+                    <label for="id">Patient ID</label>
+                </div>
+                <div class="input-field col m6 s12">
+                    <input id="fname" type="text" class="validate">
+                    <label for="fname">First Name</label>
+                </div>
+                <div class="input-field col m6 s12">
+                    <input id="lname" type="text" class="validate">
+                    <label for="lname">Last Name</label>
+                </div>
+                <div class="input-field col m6 s12">
+                    <input id="title" type="text" class="validate">
+                    <label for="title">Title</label>
+                </div>
+                <div class="input-field col s12">
+                    <textarea id="idCharacteristics" class="materialize-textarea"></textarea>
+                    <label for="idCharacteristics">Identifying Characteristics</label>
+                </div>
 
-                <!--Panel 1-->
-                <div class="tab-pane fade in show active" id="basicTab" role="tabpanel">
-                    <h2>Basic Patient Data</h2>
-                    <hr>
-                    <div class="row">
-                        <div class="col col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4>Personal Information</h4>
-                                    <hr>
-                                    <div class="md-form">
-                                        <input type="text" id="idNumber" class="form-control" value="64ef367018099de4d4183ffa3bc0848a" disabled>
-                                        <label for="idNumber" class="disabled">ID:</label>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-sm-6">
-                                            <div class="md-form">
-                                                <input type="text" id="fname" class="form-control">
-                                                <label for="fname" class="">First Name</label>
-                                            </div>
-                                            <div class="md-form">
-                                                <input type="text" id="lname" class="form-control">
-                                                <label for="form1" class="">Last Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col col-sm-6">
-                                            <div class="md-form">
-                                                <input type="text" id="title" class="form-control">
-                                                <label for="form1" class="">Title</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-sm-12">
-                                            <div class="md-form">
-                                                <textarea type="text" id="idCharacteristics" class="md-textarea"></textarea>
-                                                <label for="idCharacteristics">Identifying Characteristics</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                <h4>Critical Data</h4>
+                <div class="input-field col s12">
+                    <textarea id="allergies" class="materialize-textarea"></textarea>
+                    <label for="allergies">Allergies<label>
+                </div>
+                <div class="input-field col s12">
+                    <textarea id="miscInfo" class="materialize-textarea"></textarea>
+                    <label for="miscInfo">Misc. Information</label>
+                </div>
 
-                                </div>
+                <ul class="collection with-header" id="historyCollection">
+                    <li class="collection-header">
+                        <h4>Medical History</h4></li>
+                    <li class="collection-item" id="historyEntry1256">
+                        <span class="badge blue lighten-4">2016-01-01</span>
+                        <div><a onclick="deleteHistoryEntry(1256);"><i class="material-icons historyDeleteIcon">delete</i></a>Bronchitis worsened<span class="secondary-content"></span></div>
+                    </li>
+                    <li class="collection-item" id="historyEntry1156">
+                        <span class="badge red lighten-4">2015-08-21</span>
+                        <div><a onclick="deleteHistoryEntry(1156);"><i class="material-icons historyDeleteIcon">delete</i></a>Bronchitis<span class="secondary-content"></span></div>
+                    </li>
+                    <li class="collection-item" id="historyEntry1558">
+                        <span class="badge green lighten-4">2014-01-01</span>
+                        <div><a onclick="deleteHistoryEntry(1558);"><i class="material-icons historyDeleteIcon">delete</i></a>Scoliosis 35&deg; S curve<span class="secondary-content"></span></div>
+                    </li>
+                    <li class="collection-item" id="historyEntry9946">
+                        <span class="badge blue lighten-4">1985-10-10</span>
+                        <div><a onclick="deleteHistoryEntry(9946);"><i class="material-icons historyDeleteIcon">delete</i></a>Born<span class="secondary-content"></span></div>
+                    </li>
+                </ul>
+                <ul class="collapsible" data-collapsible="accordion" id="historyEntryAccordion">
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">note_add</i>Add history entry</div>
+                        <div class="collapsible-body">
+                            <div class="input-field col s12">
+                                <input id="newHistoryEntry" type="text">
+                                <label for="newHistoryEntry">Label</label>
                             </div>
+                            <div>
+                                    <p>
+                                        <input name="newHistoryColor" id="historyColorRed" type="radio" value="red" />
+                                        <label for="historyColorRed">Red</label>
+                                    </p>
+                                    <p>
+                                        <input name="newHistoryColor" id="historyColorYellow" type="radio" value="yellow" />
+                                        <label for="historyColorYellow">Yellow</label>
+                                    </p>
+                                    <p>
+                                        <input name="newHistoryColor" id="historyColorGreen" type="radio" value="green" selected/>
+                                        <label for="historyColorGreen">Green</label>
+                                    </p>
+                            </div>
+                            <a class="waves-effect waves-light btn" onclick="saveNewHistory();">Save</a>
                         </div>
-                        <div class="col col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4>Identity</h4>
-                                    <form id="photoUpload">
-                                        <div class="file-field" id="fileFieldContainer">
-                                            <div class="btn btn-primary btn-sm">
-                                                <span>Upload Photo</span>
-                                                <input type="file" id="photoUpload">
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <div id="photobox">
-                                        <figure>
-                                            <img src="https://www.placecage.com/c/300/300">
-                                            <figcaption>Photo taken: <span id="photoDate">2016-01-01</span></figcaption>
-                                            <figure>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <hr>
-                            <h4>Critical Data</h4>
-                            <hr>
-                            <div class="md-form">
-                                <textarea type="text" id="criticalAllergies" class="md-textarea"></textarea>
-                                <label for="criticalAllergies">Allergies</label>
-                            </div>
-                            <div class="md-form">
-                                <textarea type="text" id="criticalMisc" class="md-textarea"></textarea>
-                                <label for="criticalMisc">Misc. Information</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--/.Panel 1-->
-
-                <!--Panel 2-->
-                <div class="tab-pane fade" id="medicationTab" role="tabpanel">
-                    <h2>Medication Data</h2>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-
-                </div>
-                <!--/.Panel 2-->
-
-                <!--Panel 3-->
-                <div class="tab-pane fade" id="diagnosticsTab" role="tabpanel">
-                    <h2>Diagnostics</h2>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                </div>
-                <!--/.Panel 3-->
-
-                <!--Panel 4-->
-                <div class="tab-pane fade" id="additionalTab" role="tabpanel">
-                    <h2>Additional Data</h2>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                </div>
-                <!--/.Panel 4-->
-
-            </div>
-
-
-        </div>
-        <!--/.Main layout-->
-
-    </main>
-
-    <!--Footer-->
-    <footer class="page-footer center-on-small-only primary-color-dark">
-
-        <!--Copyright-->
-        <div class="footer-copyright">
-            <div class="container-fluid">
-                © 2016 Copyright -- <code>EHRaS Client Build 3728</code>
+                    </li>
+                </ul>
 
             </div>
         </div>
-        <!--/.Copyright-->
+    </div>
 
-    </footer>
-    <!--/.Footer-->
+    <div class="row tabTop" id="medicationTab">
+        <div class="col s12">
+            <div class="container">
+                <h4 class="tabTitle">Medications</h4>
 
+            </div>
+        </div>
+    </div>
 
-    <!-- SCRIPTS -->
+    <div class="row tabTop" id="diagnosticsTab">
+        <div class="col s12">
+            <div class="container">
+                <h4 class="tabTitle">Diagnostics</h4>
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+            </div>
+        </div>
+    </div>
 
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="js/tether.min.js"></script>
+    <div class="row tabTop" id="additionalTab">
+        <div class="col s12">
+            <div class="container">
+                <h4 class="tabTitle">Additional Data</h4>
 
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+            </div>
+        </div>
+    </div>
 
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
-
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/stubs.js"></script>
 </body>
 
 </html>

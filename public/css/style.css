@@ -1,18 +1,20 @@
-main {
-    padding-top: 3rem;
-    padding-bottom: 2rem;
+#tabTop {
+    margin-top: 10px;
 }
 
-.form-control{
-    margin-bottom: 0;
-    padding-bottom: 0;
+.input-field {
+    margin-top: 0px;
 }
 
-#photobox{
-    display: flex;
-    justify-content: center;
+#photoInput {
+    display: none;
 }
 
-#fileFieldContainer{
-    text-align: center;
+.additionalBottomMargin {
+    margin-bottom: 10px;
+}
+
+.historyDeleteIcon {
+    position: relative;
+    left: -25px;
 }
