@@ -1,17 +1,17 @@
 /* globals Materialize */
 
-function savePatient(){
+function savePatient() {
     "use strict";
     Materialize.toast('Patient saved!', 1000);
 }
 
-function uploadProfile(){
+function uploadProfile() {
 
     "use strict";
     // TODO
     // watch for file upload with js
 
-    $('#photoInput').onchange(function(){
+    $('#photoInput').onchange(function() {
         // grab file
         // do xhr post request
         // take the ID you get back
@@ -27,7 +27,7 @@ function uploadProfile(){
     Materialize.toast('Image updated', 1000);
 }
 
-function replacePhoto(imgID){
+function replacePhoto(imgID) {
     "use strict";
 
     // TODO
@@ -36,7 +36,7 @@ function replacePhoto(imgID){
 }
 
 
-function deleteHistoryEntry(historyID){
+function deleteHistoryEntry(historyID) {
     //TODO remove from DOM
     "use strict";
 
@@ -45,7 +45,7 @@ function deleteHistoryEntry(historyID){
 
 }
 
-function saveNewHistory(){
+function saveNewHistory() {
     "use strict";
 
     var text = $('#newHistoryEntry').val();
@@ -71,4 +71,39 @@ function saveNewHistory(){
     // TODO clear format
     // send toast: Materialize.toast('History updated', 1000);
     // collapse accordion maybe? $('#historyEntryAccordion').close()
+}
+
+$(document).ready(function() {
+    "use strict";
+    $(".button-collapse").sideNav();
+});
+
+function loadPatient() {
+    "use strict";
+
+
+    $('.tabTop').hide();
+    $('#loadPatientTabButton').show();
+    $('#loadPatientTab').show();
+
+    $('.tab').addClass('disabled');
+    $('.tabs').tabs('select_tab', 'loadPatientTab');
+
+    $('#saveButton').hide();
+
+
+}
+
+function enablePage() {
+    "use strict";
+
+    $('#loadPatientTabButton').hide();
+
+    $('.tab').removeClass('disabled');
+    $('.tabs').tabs('select_tab', 'basicTab');
+
+    $('#saveButton').show();
+
+    $('.tabs').tabs();
+    $('#loadPatientTab').hide();
 }

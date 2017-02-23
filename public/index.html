@@ -35,33 +35,32 @@
                 <a href="#" class="brand-logo">EHRaS</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="#">Save Patient</a></li>
-                    <li><a href="#">Close Patient</a></li>
-                    <li><a href="#">Load Patient</a></li>
+                    <li><a href="#" onclick="savePatient(); loadPatient(); $('.button-collapse').sideNav('hide');">Save &amp; Load Patient</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="#">Save Patient</a></li>
-                    <li class="divider">
-                        <li>
-                            <li><a href="#">Close Patient</a></li>
-                            <li><a href="#">Loa Patient</a></li>
+                    <li><a href="#" onclick="savePatient(); loadPatient(); $('.button-collapse').sideNav('hide');">Save &amp; Load Patient</a></li>
                 </ul>
             </div>
             <div class="nav-content">
                 <ul class="tabs tabs-transparent">
-                    <li class="tab" class="active"><a href="#basicTab">Basics</a></li>
-                    <li class="tab"><a href="#medicationTab">Meds</a></li>
-                    <li class="tab"><a href="#diagnosticsTab">Diag.</a></li>
-                    <li class="tab"><a href="#additionalTab">Addtl.</a></li>
+                    <li class="tab" id="loadPatientTabButton" class="active"><a href="#loadTab">Load Patient</a></li>
+                    <li class="tab disabled" id="basicTabButton"><a href="#basicTab">Basics</a></li>
+                    <li class="tab disabled"><a href="#medicationTab">Meds</a></li>
+                    <li class="tab disabled"><a href="#diagnosticsTab">Diag.</a></li>
+                    <li class="tab disabled"><a href="#additionalTab">Addtl.</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <div class="fixed-action-btn">
+    <div id="saveButton" style="display: none;" class="fixed-action-btn">
         <a class="btn-floating btn-large red" onclick="savePatient();">
             <i class="large material-icons">done</i>
         </a>
+    </div>
+
+    <div class="row tabTop" id="loadPatientTab">
+        <h1>Load</h1>
     </div>
 
     <div class="row tabTop" id="basicTab">
@@ -134,18 +133,18 @@
                                 <label for="newHistoryEntry">Label</label>
                             </div>
                             <div>
-                                    <p>
-                                        <input name="newHistoryColor" id="historyColorRed" type="radio" value="red" />
-                                        <label for="historyColorRed">Red</label>
-                                    </p>
-                                    <p>
-                                        <input name="newHistoryColor" id="historyColorYellow" type="radio" value="yellow" />
-                                        <label for="historyColorYellow">Yellow</label>
-                                    </p>
-                                    <p>
-                                        <input name="newHistoryColor" id="historyColorGreen" type="radio" value="green" selected/>
-                                        <label for="historyColorGreen">Green</label>
-                                    </p>
+                                <p>
+                                    <input name="newHistoryColor" id="historyColorRed" type="radio" value="red" />
+                                    <label for="historyColorRed">Red</label>
+                                </p>
+                                <p>
+                                    <input name="newHistoryColor" id="historyColorYellow" type="radio" value="yellow" />
+                                    <label for="historyColorYellow">Yellow</label>
+                                </p>
+                                <p>
+                                    <input name="newHistoryColor" id="historyColorGreen" type="radio" value="green" selected/>
+                                    <label for="historyColorGreen">Green</label>
+                                </p>
                             </div>
                             <a class="waves-effect waves-light btn" onclick="saveNewHistory();">Save</a>
                         </div>
