@@ -8,7 +8,7 @@ var fs = require('fs');
 var app = express();
 
 app.use(compression());
-app.use(serveStatic(__dirname + '/dist'));
+app.use(express.static('public'))
 
 http.createServer(app).listen(8080);
 
