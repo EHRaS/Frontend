@@ -1,5 +1,7 @@
 /* globals Materialize */
 
+var globalDataObj = {};
+
 function savePatient() {
     "use strict";
     Materialize.toast('Patient saved!', 1000);
@@ -13,10 +15,8 @@ function uploadProfile() {
 
     $('#photoInput').onchange(function() {
         // grab file
-        // do xhr post request
-        // take the ID you get back
-        var idYouGot = 0; // server repsonse
-        replacePhoto(idYouGot);
+        // convert to data UI
+        // stick into master object and save
     });
 
 
@@ -25,14 +25,7 @@ function uploadProfile() {
     // handle file upload
     // replace image
     Materialize.toast('Image updated', 1000);
-}
-
-function replacePhoto(imgID) {
-    "use strict";
-
-    // TODO
-    // replace dom element for photo with response
-    // send XHR get request to image serving endpoint
+    savePatient();
 }
 
 
@@ -106,4 +99,19 @@ function enablePage() {
 
     $('.tabs').tabs();
     $('#loadPatientTab').hide();
+}
+
+function populatePage(){
+    // TODO: load page with stuff from the now-populated globalDataObj
+}
+
+function fetchData(uuid){
+    "use strict";
+
+    // TODO: fetching logic by Jack
+
+    globalDataObj = {patientFullName: "Jean Valjean"};
+
+    populatePage();
+    enablePage();
 }
