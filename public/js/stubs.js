@@ -4,6 +4,7 @@ var globalDataObj = {};
 
 function savePatient() {
     "use strict";
+    // write globalDataObj here
     Materialize.toast('Patient saved!', 1000);
 }
 
@@ -74,6 +75,8 @@ $(document).ready(function() {
 function loadPatient() {
     "use strict";
 
+    // TODO: clear session key
+
 
     $('.tabTop').hide();
     $('#loadPatientTabButton').show();
@@ -109,6 +112,7 @@ function fetchData(uuid){
     "use strict";
 
     // TODO: fetching logic by Jack
+    // TODO: check for existing session key; attempt to use if possible
 
     globalDataObj = {patientFullName: "Jean Valjean"};
 
