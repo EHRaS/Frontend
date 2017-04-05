@@ -28,4 +28,5 @@ function clearPage() {
     });
 
     globalDataObj = {};
+    $('.historyEntry').remove(); // clear med history
 }
