@@ -44,23 +44,17 @@
             <div class="nav-content">
                 <ul class="tabs tabs-transparent">
                     <li class="tab" id="loadPatientTabButton" class="active"><a href="#loadTab">Scan</a></li>
-                    <li class="tab disabled" id="basicTabButton"><a href="#basicTab" onclick="$('#addDiagnostic').addClass('hidden');">Basics</a></li>
-                    <li class="tab disabled"><a href="#diagnosticsTab" onclick="$('#addDiagnostic').removeClass('hidden');">Diagnostics</a></li>
-                    <li class="tab disabled"><a href="#additionalTab" onclick="$('#addDiagnostic').addClass('hidden');">Addtl.</a></li>
+                    <li class="tab disabled" id="basicTabButton"><a href="#basicTab">Basics</a></li>
+                    <li class="tab disabled"><a href="#diagnosticsTab">Diagnostics</a></li>
+                    <li class="tab disabled"><a href="#additionalTab">Addtl.</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
     <div id="saveButton" style="display: none;" class="fixed-action-btn">
-        <a class="btn-floating btn-large red" onclick="savePatient();">
+        <a class="btn-floating btn-large red" onclick="savePatient(true);">
             <i class="large material-icons">done</i>
-        </a>
-    </div>
-
-    <div id="addDiagnostic" class="fixed-action-btn-left hidden">
-        <a class="btn-floating btn-large left" onclick="addDiagnostic();">
-            <i class="large material-icons">mode_edit</i>
         </a>
     </div>
 
@@ -164,7 +158,9 @@
                         <li class="collection-header">
                             <h4>Medical History</h4>
                         </li>
-                        <!-- med history goes here -->
+                        <div id="historyContainer">
+                            <!-- med history goes here -->
+                        </div>
                     </ul>
                     <ul class="collapsible" data-collapsible="accordion" id="historyEntryAccordion">
                         <li>
@@ -201,22 +197,32 @@
                 <div class="container">
                     <h4 class="tabTitle">Diagnostic Records</h4>
                     <hr />
-                    <div id="diagnosticCollection">
-                        <!-- <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="https://www.placecage.com/c/400/400">
+                    <ul class="collapsible" data-collapsible="accordion" id="diagnosticEntryAccordion">
+                        <li>
+                            <div class="collapsible-header" id="diagnosticCollapseClick"><i class="material-icons">note_add</i>Add diagnostic entry</div>
+                            <div class="collapsible-body">
+                                <div class="input-field col s12">
+                                    <input id="newDiagnosticEntry" type="text">
+                                    <label for="newDiagnosticEntry">Title</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="newDiagnosticDate" type="text">
+                                    <label for="newDiagnosticDate">Date</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="newDiagnosticDataUrl" type="text">
+                                    <label for="newDiagnosticDataUrl">Data Url</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <textarea id="newDiagnosticDetail" placeholder="In depth details..."></textarea>
+                                </div>
+                                <a class="waves-effect waves-light btn" onclick="saveNewDiagnostic();">Save</a>
                             </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                                <p><a href="#">This is a link</a></p>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div>
-                        </div> -->
+                        </li>
+                    </ul>
+                    <div id="diagnosticContainer">
+                        <!-- diagnostics go here -->
                     </div>
-
                 </div>
             </div>
         </div>

@@ -28,14 +28,15 @@ function populatePage() {
 
     // populate history
     if (globalDataObj.hasOwnProperty('medicalHistory')) {
-        globalDataObj.medicalHistory.forEach(function(histEntry) {
-            insertHistory(histEntry.text, histEntry.color, histEntry.date);
-        });
+        $('#historyContainer').empty();
+        $('#historyContainer').html(atob(globalDataObj.medicalHistory));
     }
 
     // populate diagnostics
-    $('#diagnosticCollection').empty();
-    $('#diagnosticCollection').html(atob(globalDataObj.diagnostics));
+    if (globalDataObj.hasOwnProperty('diagnostics')) {
+        $('#diagnosticContainer').empty();
+        $('#diagnosticContainer').html(atob(globalDataObj.diagnostics));
+    }
 
     pageActive = true;
     registerEditListeners();

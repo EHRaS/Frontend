@@ -2,7 +2,7 @@
 var globalDataObj = {};
 var server = 'http://localhost:3000/';
 
-function savePatient() {
+function savePatient(notify) {
     "use strict";
     // load into globalDataObj
     // generic field pickup -- assumes all fields have an ID that is the same as the template name of the fields
@@ -14,23 +14,11 @@ function savePatient() {
         }
     });
 
-    // grab each entry of the medical history
-    var medicalHistoryEntries = [];
-    document.querySelectorAll('.historyEntry').forEach(function(obj) {
-        var color = obj.children[0].className;
-        var date = obj.children[0].innerHTML;
-        var text = obj.children[2].innerHTML;
-        medicalHistoryEntries.push({
-            color: color,
-            date: date,
-            text: text
-        });
-    });
-
-    globalDataObj.medicalHistory = medicalHistoryEntries;
+    // grab each entry of the medical history base64'd
+    globalDataObj.medicalHistory = btoa($('#historyContainer').html());
 
     // grab all the diagnostic history base64'd
-    globalDataObj.diagnostics = btoa($('#diagnosticCollection').html());
+    globalDataObj.diagnostics = btoa($('#diagnosticContainer').html());
 
     var jqxhr = $.post(server + 'data/' + globalDataObj.uuid + '/' + getSessionKey(), {
             data: JSON.stringify(globalDataObj)
@@ -44,7 +32,9 @@ function savePatient() {
                 return;
             }
 
-            Materialize.toast("Patient saved.", 5000);
+            if (notify) {
+                Materialize.toast("Patient saved.", 5000);
+            }
         });
 }
 
@@ -64,35 +54,30 @@ function uploadProfile() {
     // handle file upload
     // replace image
     Materialize.toast('Image updated', 1000);
-    savePatient();
+    savePatient(true);
 }
 
 function insertHistory(text, color, date) {
     "use strict";
-    var collectionItem = document.createElement('li');
-    collectionItem.className = 'collection-item historyEntry';
+    var itemHTML = $.parseHTML('<li class="collection-item historyEntry"><span class="badge lighten-4 ' + color + '">' + date + '</span><a onclick="this.parentNode.remove(); savePatient(false);"><i class="material-icons historyDeleteIcon">delete</i></a><span>' + text + '</span></li>');
 
-    var dateTag = document.createElement('span');
-    dateTag.className = color;
-    dateTag.innerHTML = date;
-    collectionItem.appendChild(dateTag);
-
-    var deletion = document.createElement('a');
-    deletion.onclick = function() {
-        this.parentNode.remove();
-    };
-    deletion.innerHTML = '<i class="material-icons historyDeleteIcon">delete</i>';
-    collectionItem.appendChild(deletion);
-
-    var message = document.createElement('span');
-    message.innerHTML = text;
-    collectionItem.appendChild(message);
-
-    $('#historyCollection').append(collectionItem); // place it
+    $('#historyContainer').append(itemHTML); // place it
 
     $('#newHistoryEntry').val(''); // empty the input form
-
     $('#historyCollapseClick').click(); // collapse the accordion. Gimpy, I know.
+}
+
+function insertDiagnostic(title, date, url, detail) {
+    "use strict";
+    var itemHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
+
+    $('#diagnosticContainer').append(itemHTML); // place it
+
+    $('#newDiagnosticEntry').val(''); // empty the input form
+    $('#newDiagnosticDate').val('');
+    $('#newDiagnosticDataUrl').val('');
+    $('#newDiagnosticDetail').val('');
+    $('#diagnosticCollapseClick').click(); // collapse the accordion. Gimpy, I know.
 }
 
 function saveNewHistory() {
@@ -102,9 +87,23 @@ function saveNewHistory() {
     var color = $('[name="newHistoryColor"]:checked').val();
 
     // call insert code
-    insertHistory(text, 'badge lighten-4 ' + color, (new Date()).toISOString().split('T')[0]);
-    Materialize.toast('History updated', 2000);
-    savePatient();
+    insertHistory(text, color, (new Date()).toISOString().split('T')[0]);
+    Materialize.toast('History record added', 2000);
+    savePatient(false);
+}
+
+function saveNewDiagnostic() {
+    "use strict";
+
+    var title = $('#newDiagnosticEntry').val();
+    var date = $('#newDiagnosticDate').val();
+    var url = $('#newDiagnosticDataUrl').val();
+    var detail = $('#newDiagnosticDetail').val();
+
+    // call insert code
+    insertDiagnostic(title, date, url, detail);
+    Materialize.toast('Diagnostic record added', 2000);
+    savePatient(false);
 }
 
 $(document).ready(function() {
