@@ -8,7 +8,7 @@ var heatlamp = require('express-heatlamp');
 
 var app = express();
 
-app.use(heatlamp({ min: 168, max: 336 })); // 1 week to 2 weeks
+// app.use(heatlamp({ min: 168, max: 336 })); // 1 week to 2 weeks
 app.use(compression());
 app.use(express.static('public'));
 
