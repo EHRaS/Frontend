@@ -52,7 +52,8 @@ function fetchData() {
     // populate global data obj
 
     globalDataObj = {
-        fname: "testFName"
+        fname: "John",
+        uuid: uuid
     };
 
     populatePage();

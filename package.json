@@ -12,6 +12,7 @@
   "dependencies": {
     "compression": "^1.6.0",
     "express": "^4.13.3",
+    "express-heatlamp": "*",
     "serve-static": "^1.10.0"
   },
   "description": "EHRAS frontend",

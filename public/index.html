@@ -92,8 +92,21 @@
             </div>
         </div>
     </div>
+    <div id="compiledContainer">
 
-    <div class="row tabTop" id="basicTab">
+    </div>
+
+    <script src="js/sha256.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/population.js"></script>
+    <script src="js/auth.js"></script>
+
+    </script>
+    <script id="toCompile" type="text/x-handlebars-template">
+      <div class="row tabTop" id="basicTab">
         <div class="col s12">
             <div class="container">
                 <h4 class="tabTitle" id="patientFullName">Patient Name</h4>
@@ -104,33 +117,35 @@
                     <hr class="additionalBottomMargin" />
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="id" class="dataEntry" type="text" value="64ef367018099de4d4183ffa3bc0848a" disabled>
-                    <label for="id">Patient ID</label>
+
+                    <input id="id" class="dataEntry" type="text" value="{{uuid}}" disabled>
+
+                    <label for="id" class="active">Patient ID</label>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="fname" type="text" class="validate dataEntry">
+                    <input id="fname" type="text" class="validate dataEntry" value="{{fname}}">
                     <label for="fname">First Name</label>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="lname" type="text" class="validate dataEntry">
+                    <input id="lname" type="text" class="validate dataEntry" value="{{lname}}">
                     <label for="lname">Last Name</label>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="title" type="text" class="validate dataEntry">
+                    <input id="title" type="text" class="validate dataEntry" value="{{title}}">
                     <label for="title">Title</label>
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="idCharacteristics" class="materialize-textarea dataEntry"></textarea>
+                    <textarea id="idCharacteristics" class="materialize-textarea dataEntry" value="{{idCharacteristics}}"></textarea>
                     <label for="idCharacteristics">Identifying Characteristics</label>
                 </div>
 
                 <h4>Critical Data</h4>
                 <div class="input-field col s12">
-                    <textarea id="allergies" class="materialize-textarea dataEntry"></textarea>
+                    <textarea id="allergies" class="materialize-textarea dataEntry" value="{{allergies}}"></textarea>
                     <label for="allergies">Allergies<label>
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="miscInfo" class="materialize-textarea dataEntry"></textarea>
+                    <textarea id="miscInfo" class="materialize-textarea dataEntry" value="{{miscInfo}}"></textarea>
                     <label for="miscInfo">Misc. Information</label>
                 </div>
 
@@ -178,7 +193,7 @@
         </div>
     </div>
 
-    <div class="row tabTop" id="medicationTab">
+      <div class="row tabTop" id="medicationTab">
         <div class="col s12">
             <div class="container">
                 <h4 class="tabTitle">Medications</h4>
@@ -187,7 +202,7 @@
         </div>
     </div>
 
-    <div class="row tabTop" id="diagnosticsTab">
+      <div class="row tabTop" id="diagnosticsTab">
         <div class="col s12">
             <div class="container">
                 <h4 class="tabTitle">Diagnostics</h4>
@@ -196,7 +211,7 @@
         </div>
     </div>
 
-    <div class="row tabTop" id="additionalTab">
+      <div class="row tabTop" id="additionalTab">
         <div class="col s12">
             <div class="container">
                 <h4 class="tabTitle">Additional Data</h4>
@@ -204,13 +219,7 @@
             </div>
         </div>
     </div>
-
-    <script src="js/sha256.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="js/base.js"></script>
-    <script src="js/materialize.min.js"></script>
-    <script src="js/population.js"></script>
-    <script src="js/auth.js"></script>
+    </script>
 </body>
 
 </html>

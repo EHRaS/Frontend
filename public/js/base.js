@@ -1,5 +1,4 @@
 /* globals Materialize, sha256 */
-
 var globalDataObj = {};
 
 function savePatient() {
