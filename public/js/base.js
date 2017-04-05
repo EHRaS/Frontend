@@ -6,13 +6,22 @@ function savePatient() {
     // load into globalDataObj
     // generic field pickup -- assumes all fields have an ID that is the same as the template name of the fields
     // also assumes each field has the class dataEntry
-
     document.querySelectorAll('.dataEntry').forEach(function(obj) {
         // if the GDO doesn't have the key or has a different key, overwrite it
         if (globalDataObj.hasOwnProperty(obj.id) || (globalDataObj[obj.id] !== $('#' + obj.id).val())) {
             globalDataObj[obj.id] = $('#' + obj.id).val();
         }
     });
+
+    // grab each entry of the medical history
+    var medicalHistoryEntries = [];
+    document.querySelectorAll('.historyEntry').forEach(function(obj) {
+        var color = obj.children[0].className;
+        var date = obj.children[0].innerHTML;
+        var text = obj.children[2].innerHTML;
+        medicalHistoryEntries.push({color: color, date: date, text: text});
+    });
+    globalDataObj.medicalHistory = medicalHistoryEntries;
 
     console.log(globalDataObj);
 
@@ -41,10 +50,10 @@ function uploadProfile() {
 
 function insertHistory(text, color, date){
     var collectionItem = document.createElement('li');
-    collectionItem.className = 'collection-item';
+    collectionItem.className = 'collection-item historyEntry';
 
     var dateTag = document.createElement('span');
-    dateTag.className = 'badge lighten-4 ' + color;
+    dateTag.className = color;
     dateTag.innerHTML = date;
     collectionItem.appendChild(dateTag);
 
@@ -53,7 +62,8 @@ function insertHistory(text, color, date){
     deletion.innerHTML = '<i class="material-icons historyDeleteIcon">delete</i>';
     collectionItem.appendChild(deletion);
 
-    var message = document.createTextNode(text);
+    var message = document.createElement('span');
+    message.innerHTML = text;
     collectionItem.appendChild(message);
 
     $('#historyCollection').append(collectionItem);
@@ -71,7 +81,7 @@ function saveNewHistory() {
     var color = $('[name="newHistoryColor"]:checked').val();
 
     // call insert code
-    insertHistory(text, color, (new Date()).toISOString().split('T')[0]);
+    insertHistory(text, 'badge lighten-4 ' + color, (new Date()).toISOString().split('T')[0]);
 }
 
 $(document).ready(function() {
