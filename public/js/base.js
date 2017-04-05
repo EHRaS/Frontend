@@ -101,6 +101,7 @@ function saveNewHistory() {
     // call insert code
     insertHistory(text, 'badge lighten-4 ' + color, (new Date()).toISOString().split('T')[0]);
     Materialize.toast('History updated', 2000);
+    savePatient();
 }
 
 $(document).ready(function() {

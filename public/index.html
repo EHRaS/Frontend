@@ -109,7 +109,7 @@
       <div class="row tabTop" id="basicTab">
         <div class="col s12">
             <div class="container">
-                <h4 class="tabTitle" id="patientFullName">Patient Name</h4>
+                <h4 class="tabTitle">{{lname}}, {{fname}}</h4>
                 <div id="photoBox">
                     <img id ="profileImage" src="http://placecage.com/300/300" /><br />
                     <input type="file" id="photoInput">
@@ -134,10 +134,15 @@
                     <input id="title" type="text" class="validate dataEntry" value="{{title}}">
                     <label for="title">Title</label>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col m6 s12">
+                    <input id="dob" type="text" class="validate dataEntry" value="{{dob}}">
+                    <label for="dob">DOB</label>
+                </div>
+                <div class="input-field col m6 s12">
                     <textarea id="idCharacteristics" class="materialize-textarea dataEntry" value="{{idCharacteristics}}"></textarea>
                     <label for="idCharacteristics">Identifying Characteristics</label>
                 </div>
+
 
                 <h4>Critical Data</h4>
                 <div class="input-field col s12">
@@ -181,7 +186,6 @@
                         </div>
                     </li>
                 </ul>
-
             </div>
         </div>
     </div>
