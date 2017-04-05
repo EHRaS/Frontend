@@ -4,7 +4,7 @@ function loadPatient() {
     "use strict";
 
     clearPage();
-    // TODO: clear session key
+    document.cookie = 'sk=';
 
     $('.tabTop').hide();
     $('#loadPatientTabButton').show();
