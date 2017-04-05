@@ -16,6 +16,8 @@ function loadPatient() {
     $('#saveButton').hide();
 
     $('#UUID').val('');
+    $('#useTagButton').addClass('disabled');
+    $('#addDiagnostic').addClass('hidden');
 }
 
 function enablePage() {

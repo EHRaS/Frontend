@@ -33,6 +33,10 @@ function populatePage() {
         });
     }
 
+    // populate diagnostics
+    $('#diagnosticCollection').empty();
+    $('#diagnosticCollection').html(atob(globalDataObj.diagnostics));
+
     pageActive = true;
     registerEditListeners();
 }

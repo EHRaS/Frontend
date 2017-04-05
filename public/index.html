@@ -43,11 +43,10 @@
             </div>
             <div class="nav-content">
                 <ul class="tabs tabs-transparent">
-                    <li class="tab" id="loadPatientTabButton" class="active"><a href="#loadTab">Load Patient</a></li>
-                    <li class="tab disabled" id="basicTabButton"><a href="#basicTab">Basics</a></li>
-                    <li class="tab disabled"><a href="#medicationTab">Meds</a></li>
-                    <li class="tab disabled"><a href="#diagnosticsTab">Diag.</a></li>
-                    <li class="tab disabled"><a href="#additionalTab">Addtl.</a></li>
+                    <li class="tab" id="loadPatientTabButton" class="active"><a href="#loadTab">Scan</a></li>
+                    <li class="tab disabled" id="basicTabButton"><a href="#basicTab" onclick="$('#addDiagnostic').addClass('hidden');">Basics</a></li>
+                    <li class="tab disabled"><a href="#diagnosticsTab" onclick="$('#addDiagnostic').removeClass('hidden');">Diagnostics</a></li>
+                    <li class="tab disabled"><a href="#additionalTab" onclick="$('#addDiagnostic').addClass('hidden');">Addtl.</a></li>
                 </ul>
             </div>
         </nav>
@@ -56,6 +55,12 @@
     <div id="saveButton" style="display: none;" class="fixed-action-btn">
         <a class="btn-floating btn-large red" onclick="savePatient();">
             <i class="large material-icons">done</i>
+        </a>
+    </div>
+
+    <div id="addDiagnostic" class="fixed-action-btn-left hidden">
+        <a class="btn-floating btn-large left" onclick="addDiagnostic();">
+            <i class="large material-icons">mode_edit</i>
         </a>
     </div>
 
@@ -104,8 +109,8 @@
     <script src="js/population.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/tag.js"></script>
+    <script src="js/testing.js"></script>
 
-    </script>
     <script id="toCompile" type="text/x-handlebars-template">
         <div class="row tabTop" id="basicTab">
             <div class="col s12">
@@ -191,19 +196,26 @@
             </div>
         </div>
 
-        <div class="row tabTop" id="medicationTab">
-            <div class="col s12">
-                <div class="container">
-                    <h4 class="tabTitle">Medications</h4>
-
-                </div>
-            </div>
-        </div>
-
         <div class="row tabTop" id="diagnosticsTab">
             <div class="col s12">
                 <div class="container">
-                    <h4 class="tabTitle">Diagnostics</h4>
+                    <h4 class="tabTitle">Diagnostic Records</h4>
+                    <hr />
+                    <div id="diagnosticCollection">
+                        <!-- <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="https://www.placecage.com/c/400/400">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+                                <p><a href="#">This is a link</a></p>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                            </div>
+                        </div> -->
+                    </div>
 
                 </div>
             </div>

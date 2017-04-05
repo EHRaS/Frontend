@@ -29,6 +29,9 @@ function savePatient() {
 
     globalDataObj.medicalHistory = medicalHistoryEntries;
 
+    // grab all the diagnostic history base64'd
+    globalDataObj.diagnostics = btoa($('#diagnosticCollection').html());
+
     var jqxhr = $.post(server + 'data/' + globalDataObj.uuid + '/' + getSessionKey(), {
             data: JSON.stringify(globalDataObj)
         })
