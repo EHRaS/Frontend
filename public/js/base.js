@@ -84,10 +84,11 @@ function saveNewHistory() {
     "use strict";
 
     var text = $('#newHistoryEntry').val();
+    var date = $('#newHistoryDate').val();
     var color = $('[name="newHistoryColor"]:checked').val();
 
     // call insert code
-    insertHistory(text, color, (new Date()).toISOString().split('T')[0]);
+    insertHistory(text, color, date);
     Materialize.toast('History record added', 2000);
     savePatient(false);
 }

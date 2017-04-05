@@ -46,7 +46,7 @@
                     <li class="tab" id="loadPatientTabButton" class="active"><a href="#loadTab">Scan</a></li>
                     <li class="tab disabled" id="basicTabButton"><a href="#basicTab">Basics</a></li>
                     <li class="tab disabled"><a href="#diagnosticsTab">Diagnostics</a></li>
-                    <li class="tab disabled"><a href="#additionalTab">Addtl.</a></li>
+                    <li class="tab disabled"><a href="#additionalTab">Notes</a></li>
                 </ul>
             </div>
         </nav>
@@ -170,6 +170,10 @@
                                     <input id="newHistoryEntry" type="text">
                                     <label for="newHistoryEntry">Label</label>
                                 </div>
+                                <div class="input-field col s12">
+                                    <input id="newHistoryDate" type="text">
+                                    <label for="newHistoryDate">Date</label>
+                                </div>
                                 <div>
                                     <p>
                                         <input name="newHistoryColor" id="historyColorRed" type="radio" value="red" />
@@ -230,8 +234,8 @@
         <div class="row tabTop" id="additionalTab">
             <div class="col s12">
                 <div class="container">
-                    <h4 class="tabTitle">Additional Data</h4>
-
+                    <h4 class="tabTitle">Doctor's Notes</h4>
+                    <textarea id="doctorsNotes" style="height: 70vh;" class="dataEntry">{{doctorsNotes}}</textarea>
                 </div>
             </div>
         </div>
