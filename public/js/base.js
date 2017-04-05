@@ -1,5 +1,6 @@
-/* globals Materialize, sha256 */
+/* globals Materialize, sha256, loadPatient, clearPage */
 var globalDataObj = {};
+var server = 'http://localhost:3000/';
 
 function savePatient() {
     "use strict";
@@ -19,13 +20,29 @@ function savePatient() {
         var color = obj.children[0].className;
         var date = obj.children[0].innerHTML;
         var text = obj.children[2].innerHTML;
-        medicalHistoryEntries.push({color: color, date: date, text: text});
+        medicalHistoryEntries.push({
+            color: color,
+            date: date,
+            text: text
+        });
     });
+
     globalDataObj.medicalHistory = medicalHistoryEntries;
 
-    console.log(JSON.stringify(globalDataObj));
+    var jqxhr = $.post(server + 'data/' + globalDataObj.uuid + '/' + getSessionKey(), {data: JSON.stringify(globalDataObj)})
+        .always(function(data) {
+            if (data && data.status && data.status !== 204) {
+                // not authorized
+                loadPatient();
+                clearPage();
+                Materialize.toast("Your session has expired.", 5000);
+                return;
+            }
 
-    Materialize.toast('Patient saved!', 1000);
+            Materialize.toast("Patient saved.", 5000);
+        });
+
+    // TODO: Current progress for sav
 }
 
 function uploadProfile() {
@@ -33,7 +50,7 @@ function uploadProfile() {
     // TODO
     // watch for file upload with js
     $('#photoInput').change(function() {
-      console.log(data);
+        console.log(data);
         // grab file
         // convert to data UI
         // stick into master object and save
@@ -48,7 +65,7 @@ function uploadProfile() {
     savePatient();
 }
 
-function insertHistory(text, color, date){
+function insertHistory(text, color, date) {
     var collectionItem = document.createElement('li');
     collectionItem.className = 'collection-item historyEntry';
 
@@ -58,7 +75,9 @@ function insertHistory(text, color, date){
     collectionItem.appendChild(dateTag);
 
     var deletion = document.createElement('a');
-    deletion.onclick = function(){this.parentNode.remove();};
+    deletion.onclick = function() {
+        this.parentNode.remove();
+    };
     deletion.innerHTML = '<i class="material-icons historyDeleteIcon">delete</i>';
     collectionItem.appendChild(deletion);
 

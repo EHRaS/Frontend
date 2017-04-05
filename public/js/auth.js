@@ -1,4 +1,4 @@
-/* globals Materialize, sha256, globalDataObj, populatePage */
+/* globals Materialize, sha256, globalDataObj, populatePage, server */
 
 function loadPatient() {
     "use strict";
@@ -41,23 +41,41 @@ function saveSecondaryCredentials() {
     $('#secondaryAuthEntry').click();
 }
 
+function getSessionKey(){
+    return document.cookie.split('sk=')[1];
+}
+
 function fetchData() {
     "use strict";
 
     var uuid = $('#UUID').val();
 
-    // TODO: fetching logic by Jack
-    // TODO: check for existing session key; attempt to use if possible
-    // else fetch session key
-    // make request for full data
-    // populate global data obj
+    // get a session key
+    var jqxhr = $.get(server + 'session/' + uuid)
+        .always(function(data) {
+            if(data.status && data.status !== 200){
+                // not authorized
+                Materialize.toast("There was an authentication issue; please try again.", 5000);
+                return;
+            }
 
-    globalDataObj = {
-        uuid: uuid
-    };
+            document.cookie = 'sk=' + data.responseText;
 
-    populatePage();
-    enablePage();
+            var jqxhr = $.get(server + 'data/' + uuid + '/' + getSessionKey())
+                .always(function(data) {
+                    if(data.status && data.status !== 200 && data.status !== 304){
+                        // not authorized
+                        Materialize.toast("There was a data load issue; please try again.", 5000);
+                        return;
+                    }
+
+                    globalDataObj = JSON.parse(data.patientData);
+                    globalDataObj.uuid = uuid;
+
+                    populatePage();
+                    enablePage();
+                });
+        });
 }
 
 function tagDetected(cryptedContents) {
