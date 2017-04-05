@@ -23,7 +23,7 @@ function savePatient() {
     });
     globalDataObj.medicalHistory = medicalHistoryEntries;
 
-    console.log(globalDataObj);
+    console.log(JSON.stringify(globalDataObj));
 
     Materialize.toast('Patient saved!', 1000);
 }

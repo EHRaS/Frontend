@@ -53,7 +53,6 @@ function fetchData() {
     // populate global data obj
 
     globalDataObj = {
-        fname: "John",
         uuid: uuid
     };
 
