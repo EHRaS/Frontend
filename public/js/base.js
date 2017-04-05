@@ -43,8 +43,6 @@ function savePatient() {
 
             Materialize.toast("Patient saved.", 5000);
         });
-
-    // TODO: Current progress for sav
 }
 
 function uploadProfile() {
@@ -52,7 +50,6 @@ function uploadProfile() {
     // TODO
     // watch for file upload with js
     $('#photoInput').change(function() {
-        console.log(data);
         // grab file
         // convert to data UI
         // stick into master object and save
