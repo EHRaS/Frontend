@@ -66,12 +66,11 @@ function insertHistory(text, color, date){
     message.innerHTML = text;
     collectionItem.appendChild(message);
 
-    $('#historyCollection').append(collectionItem);
+    $('#historyCollection').append(collectionItem); // place it
 
-    $('#newHistoryEntry').val('');
+    $('#newHistoryEntry').val(''); // empty the input form
 
-    Materialize.toast('History updated', 2000);
-    $('#historyCollapseClick').click();
+    $('#historyCollapseClick').click(); // collapse the accordion. Gimpy, I know.
 }
 
 function saveNewHistory() {
@@ -82,6 +81,7 @@ function saveNewHistory() {
 
     // call insert code
     insertHistory(text, 'badge lighten-4 ' + color, (new Date()).toISOString().split('T')[0]);
+    Materialize.toast('History updated', 2000);
 }
 
 $(document).ready(function() {
