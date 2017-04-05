@@ -52,7 +52,7 @@ function fetchData() {
     // populate global data obj
 
     globalDataObj = {
-        patientFullName: "Jean Valjean"
+        fname: "testFName"
     };
 
     populatePage();

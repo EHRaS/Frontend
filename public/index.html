@@ -104,59 +104,52 @@
                     <hr class="additionalBottomMargin" />
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="id" type="text" value="64ef367018099de4d4183ffa3bc0848a" disabled>
+                    <input id="id" class="dataEntry" type="text" value="64ef367018099de4d4183ffa3bc0848a" disabled>
                     <label for="id">Patient ID</label>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="fname" type="text" class="validate">
+                    <input id="fname" type="text" class="validate dataEntry">
                     <label for="fname">First Name</label>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="lname" type="text" class="validate">
+                    <input id="lname" type="text" class="validate dataEntry">
                     <label for="lname">Last Name</label>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input id="title" type="text" class="validate">
+                    <input id="title" type="text" class="validate dataEntry">
                     <label for="title">Title</label>
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="idCharacteristics" class="materialize-textarea"></textarea>
+                    <textarea id="idCharacteristics" class="materialize-textarea dataEntry"></textarea>
                     <label for="idCharacteristics">Identifying Characteristics</label>
                 </div>
 
                 <h4>Critical Data</h4>
                 <div class="input-field col s12">
-                    <textarea id="allergies" class="materialize-textarea"></textarea>
+                    <textarea id="allergies" class="materialize-textarea dataEntry"></textarea>
                     <label for="allergies">Allergies<label>
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="miscInfo" class="materialize-textarea"></textarea>
+                    <textarea id="miscInfo" class="materialize-textarea dataEntry"></textarea>
                     <label for="miscInfo">Misc. Information</label>
                 </div>
 
                 <ul class="collection with-header" id="historyCollection">
                     <li class="collection-header">
-                        <h4>Medical History</h4></li>
-                    <li class="collection-item" id="historyEntry1256">
+                        <h4>Medical History</h4>
+                    </li>
+                    <li class="collection-item ">
                         <span class="badge blue lighten-4">2016-01-01</span>
-                        <div><a onclick="deleteHistoryEntry(1256);"><i class="material-icons historyDeleteIcon">delete</i></a>Bronchitis worsened<span class="secondary-content"></span></div>
+                        <a onclick="this.parentNode.remove()"><i class="material-icons historyDeleteIcon">delete</i></a>Bronchitis worsened
                     </li>
-                    <li class="collection-item" id="historyEntry1156">
+                    <li class="collection-item">
                         <span class="badge red lighten-4">2015-08-21</span>
-                        <div><a onclick="deleteHistoryEntry(1156);"><i class="material-icons historyDeleteIcon">delete</i></a>Bronchitis<span class="secondary-content"></span></div>
-                    </li>
-                    <li class="collection-item" id="historyEntry1558">
-                        <span class="badge green lighten-4">2014-01-01</span>
-                        <div><a onclick="deleteHistoryEntry(1558);"><i class="material-icons historyDeleteIcon">delete</i></a>Scoliosis 35&deg; S curve<span class="secondary-content"></span></div>
-                    </li>
-                    <li class="collection-item" id="historyEntry9946">
-                        <span class="badge blue lighten-4">1985-10-10</span>
-                        <div><a onclick="deleteHistoryEntry(9946);"><i class="material-icons historyDeleteIcon">delete</i></a>Born<span class="secondary-content"></span></div>
+                        <a onclick="this.parentNode.remove()"><i class="material-icons historyDeleteIcon">delete</i></a>Bronchitis
                     </li>
                 </ul>
                 <ul class="collapsible" data-collapsible="accordion" id="historyEntryAccordion">
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">note_add</i>Add history entry</div>
+                        <div class="collapsible-header" id="historyCollapseClick"><i class="material-icons">note_add</i>Add history entry</div>
                         <div class="collapsible-body">
                             <div class="input-field col s12">
                                 <input id="newHistoryEntry" type="text">

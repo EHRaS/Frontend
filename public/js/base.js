@@ -4,7 +4,19 @@ var globalDataObj = {};
 
 function savePatient() {
     "use strict";
-    // write globalDataObj here
+    // load into globalDataObj
+    // generic field pickup -- assumes all fields have an ID that is the same as the template name of the fields
+    // also assumes each field has the class dataEntry
+
+    document.querySelectorAll('.dataEntry').forEach(function(obj) {
+        // if the GDO doesn't have the key or has a different key, overwrite it
+        if (globalDataObj.hasOwnProperty(obj.id) || (globalDataObj[obj.id] !== $('#' + obj.id).val())) {
+            globalDataObj[obj.id] = $('#' + obj.id).val();
+        }
+    });
+
+    console.log(globalDataObj);
+
     Materialize.toast('Patient saved!', 1000);
 }
 
@@ -29,14 +41,29 @@ function uploadProfile() {
     savePatient();
 }
 
+function insertHistory(text, color, date){
+    var collectionItem = document.createElement('li');
+    collectionItem.className = 'collection-item';
 
-function deleteHistoryEntry(historyID) {
-    //TODO remove from DOM
-    "use strict";
+    var dateTag = document.createElement('span');
+    dateTag.className = 'badge lighten-4 ' + color;
+    dateTag.innerHTML = date;
+    collectionItem.appendChild(dateTag);
 
-    // delete history here
-    Materialize.toast('History updated', 1000);
+    var deletion = document.createElement('a');
+    deletion.onclick = function(){this.parentNode.remove();};
+    deletion.innerHTML = '<i class="material-icons historyDeleteIcon">delete</i>';
+    collectionItem.appendChild(deletion);
 
+    var message = document.createTextNode(text);
+    collectionItem.appendChild(message);
+
+    $('#historyCollection').append(collectionItem);
+
+    $('#newHistoryEntry').val('');
+
+    Materialize.toast('History updated', 2000);
+    $('#historyCollapseClick').click();
 }
 
 function saveNewHistory() {
@@ -45,26 +72,8 @@ function saveNewHistory() {
     var text = $('#newHistoryEntry').val();
     var color = $('[name="newHistoryColor"]:checked').val();
 
-    // update backend
-
-    var id = 4382; // get this from the server or however you define it -- since it's in our big data blob, probably just a rand hex will do
-
-    var collectionItem = document.createElement('li');
-    collectionItem.className = 'collection-item';
-    collectionItem.id = 'historyEntry' + id;
-
-    var dateTag = document.createElement('span');
-    dateTag.className = 'badge lighten-4' + color;
-    dateTag.innerHTML = new Date(); // format this
-    //collectionItem.appendChildElement(dateTag);
-
-    var entryDiv = document.createElement('');
-
-    // TODO: complete DOM element cration
-    // TODO: append that to #historyCollection
-    // TODO clear format
-    // send toast: Materialize.toast('History updated', 1000);
-    // collapse accordion maybe? $('#historyEntryAccordion').close()
+    // call insert code
+    insertHistory(text, color, (new Date()).toISOString().split('T')[0]);
 }
 
 $(document).ready(function() {
