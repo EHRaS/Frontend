@@ -35,10 +35,10 @@
                 <a href="#" class="brand-logo">EHRaS</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="#" onclick="savePatient(); loadPatient(); $('.button-collapse').sideNav('hide');">Save &amp; Load Patient</a></li>
+                    <li><a href="#" onclick="loadPatient(); $('.button-collapse').sideNav('hide');">Load New Patient</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="#" onclick="savePatient(); loadPatient(); $('.button-collapse').sideNav('hide');">Save &amp; Load Patient</a></li>
+                    <li><a href="#" onclick="loadPatient(); $('.button-collapse').sideNav('hide');">Load New Patient</a></li>
                 </ul>
             </div>
             <div class="nav-content">
@@ -60,10 +60,40 @@
     </div>
 
     <div class="row tabTop" id="loadPatientTab">
-        <h1>Load</h1>
-        <p>
-            Landing page will go here, do all the frontend and backend shit, then call <a onclick="fetchData(123);">fetchData(UUID)</a>.
-        </p>
+        <div class="col s12">
+            <div class="container">
+                <h4 class="tabTitle">Load Patient</h4>
+                <hr />
+                <ul class="collapsible" data-collapsible="expandable">
+                    <li>
+                        <div class="collapsible-header active" id="secondaryAuthEntry"><i class="material-icons">perm_identity</i>Secondary Authentication</div>
+                        <div class="collapsible-body">
+                            <p>If your organization has provided you with secondary credentials, please enter them here.</p>
+                            <div class="row">
+                                <form>
+                                    <label for="secondaryUser">Username</label>
+                                    <input id="secondaryUser" type="text">
+                                    <label for="secondaryPass">Password</label>
+                                    <input id="secondaryPass" type="password">
+                                </form>
+                                <a class="waves-effect waves-light btn" onclick="saveSecondaryCredentials();">Use Credentials</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header active"><i class="material-icons">phonelink_ring</i>NFC</div>
+                        <div class="collapsible-body">
+                            <span>Please touch the device to the NFC chip or manually enter a UUID.</span><br />
+                            <input id="UUID" type="text" placeholder="<no tag detected>">
+                            <a class="waves-effect waves-light btn disabled" id="useTagButton" onclick="fetchData();">Use Tag</a>
+                        </div>
+                    </li>
+                </ul>
+                <p>
+                    Landing page will go here, do all the frontend and backend shit, then call <a onclick="fetchData(123);">fetchData(UUID)</a>.
+                </p>
+            </div>
+        </div>
     </div>
 
     <div class="row tabTop" id="basicTab">
@@ -185,9 +215,12 @@
         </div>
     </div>
 
+    <script src="js/sha256.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/base.js"></script>
     <script src="js/materialize.min.js"></script>
-    <script src="js/stubs.js"></script>
+    <script src="js/population.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 
 </html>
