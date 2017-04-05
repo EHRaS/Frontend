@@ -79,16 +79,6 @@ function fetchData() {
         });
 }
 
-function tagDetected(cryptedContents) {
-    "use strict";
-    Materialize.toast('Decrypting tag...', 2000);
-
-    // TODO: decrypt UUID here
-    // TODO: Populate box with UUID
-
-    $('#useTagButton').removeClass('disabled');
-}
-
 // handle manual UUID entry
 $('#UUID').keydown(function() {
     "use strict";
@@ -98,5 +88,3 @@ $('#UUID').keydown(function() {
         $('#useTagButton').addClass('disabled');
     }
 });
-
-// TODO: tag detection calls tagDetected
