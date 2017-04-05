@@ -1,4 +1,4 @@
-/* globals Materialize, server */
+/* globals Materialize, server, NDEF, NfcUtils, MozNDEFRecord */
 
 // tag has contents
 function fullTagDetected(cryptedContents) {
@@ -15,23 +15,58 @@ function fullTagDetected(cryptedContents) {
         });
 }
 
-function writeTag(contents) {
+function writeTag(contents, tagObj) {
     "use strict";
 
-    // TODO: write contents to tag
+    var tnf = NDEF.TNF_WELL_KNOWN;
+    var type = NDEF.RTD_URI;
+    var payload = NfcUtils.fromUTF8(contents);
+    var ndefMSG = [new MozNDEFRecord({
+        tnf: tnf,
+        type: type,
+        payload: payload
+    })];
 
+    // tag is an instance of MozNFCTag
+    tagObj.writeNDEF().then(() => {
+        Materialize.toast('New tag written!');
+    });
+
+    // now that tag is written, carry on with decryption
+    fullTagDetected(contents);
 }
 
 // tag has no contents
-function emptyTagDetected() {
+function emptyTagDetected(tagObj) {
     "use strict";
 
     var jqxhr = $.get(server + 'uuid/new')
         .always(function(newUUID) {
-            writeTag(newUUID);
+            writeTag(newUUID, tagObj);
         });
 }
 
+navigator.mozNfc.ontagfound = function(event) {
+    "use strict";
+    var tag = event.tag;
 
+    tag.readNDEF().then(records => { //is records a variable?
+        //type will be raw unsigned byte array (Uint8Array)
+        var cryptedUUID = '';
 
-// TODO: tag detection calls fullTagDetected or emptyTagDetected
+        //read tag as an array of MozNDEFRecords & concatenate their payloads (if larger than one record)
+        if (records.size > 1) {
+            for (var i = 0; i < records.size; i += 1) {
+                cryptedUUID += records[i].payload.join('');
+            }
+        } else {
+            cryptedUUID = records.payload.join('');
+        }
+
+        if (cryptedUUID.length === 0) {
+            emptyTagDetected(tag);
+        } else {
+            fullTagDetected(cryptedUUID);
+        }
+    });
+};
