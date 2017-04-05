@@ -1,4 +1,4 @@
-/* globals Materialize, sha256, loadPatient, clearPage */
+/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey */
 var globalDataObj = {};
 var server = 'http://localhost:3000/';
 
@@ -29,7 +29,9 @@ function savePatient() {
 
     globalDataObj.medicalHistory = medicalHistoryEntries;
 
-    var jqxhr = $.post(server + 'data/' + globalDataObj.uuid + '/' + getSessionKey(), {data: JSON.stringify(globalDataObj)})
+    var jqxhr = $.post(server + 'data/' + globalDataObj.uuid + '/' + getSessionKey(), {
+            data: JSON.stringify(globalDataObj)
+        })
         .always(function(data) {
             if (data && data.status && data.status !== 204) {
                 // not authorized
@@ -66,6 +68,7 @@ function uploadProfile() {
 }
 
 function insertHistory(text, color, date) {
+    "use strict";
     var collectionItem = document.createElement('li');
     collectionItem.className = 'collection-item historyEntry';
 

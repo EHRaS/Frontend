@@ -1,4 +1,4 @@
-/* globals Materialize, sha256, globalDataObj, populatePage, server */
+/* globals Materialize, sha256, globalDataObj: true, populatePage, server, clearPage */
 
 function loadPatient() {
     "use strict";
@@ -41,7 +41,8 @@ function saveSecondaryCredentials() {
     $('#secondaryAuthEntry').click();
 }
 
-function getSessionKey(){
+function getSessionKey() {
+    "use strict";
     return document.cookie.split('sk=')[1];
 }
 
@@ -53,7 +54,7 @@ function fetchData() {
     // get a session key
     var jqxhr = $.get(server + 'session/' + uuid)
         .always(function(data) {
-            if(data.status && data.status !== 200){
+            if (data.status && data.status !== 200) {
                 // not authorized
                 Materialize.toast("There was an authentication issue; please try again.", 5000);
                 return;
@@ -63,7 +64,7 @@ function fetchData() {
 
             var jqxhr = $.get(server + 'data/' + uuid + '/' + getSessionKey())
                 .always(function(data) {
-                    if(data.status && data.status !== 200 && data.status !== 304){
+                    if (data.status && data.status !== 200 && data.status !== 304) {
                         // not authorized
                         Materialize.toast("There was a data load issue; please try again.", 5000);
                         return;

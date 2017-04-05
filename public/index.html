@@ -106,116 +106,116 @@
 
     </script>
     <script id="toCompile" type="text/x-handlebars-template">
-      <div class="row tabTop" id="basicTab">
-        <div class="col s12">
-            <div class="container">
-                <h4 class="tabTitle">{{lname}}, {{fname}}</h4>
-                <div id="photoBox">
-                    <img id ="profileImage" src="http://placecage.com/300/300" /><br />
-                    <input type="file" id="photoInput">
-                    <span>Image uploaded 2016-01-01 | <a onclick="uploadProfile();">Replace Image</a></span>
-                    <hr class="additionalBottomMargin" />
-                </div>
-                <div class="input-field col m6 s12">
+        <div class="row tabTop" id="basicTab">
+            <div class="col s12">
+                <div class="container">
+                    <h4 class="tabTitle">{{lname}}, {{fname}}</h4>
+                    <div id="photoBox">
+                        <img id="profileImage" src="http://placecage.com/300/300" /><br />
+                        <input type="file" id="photoInput">
+                        <span>Image uploaded 2016-01-01 | <a onclick="uploadProfile();">Replace Image</a></span>
+                        <hr class="additionalBottomMargin" />
+                    </div>
+                    <div class="input-field col m6 s12">
 
-                    <input id="id" class="dataEntry" type="text" value="{{uuid}}" disabled>
+                        <input id="id" class="dataEntry" type="text" value="{{uuid}}" disabled>
 
-                    <label for="id" class="active">Patient ID</label>
-                </div>
-                <div class="input-field col m6 s12">
-                    <input id="fname" type="text" class="validate dataEntry" value="{{fname}}">
-                    <label for="fname">First Name</label>
-                </div>
-                <div class="input-field col m6 s12">
-                    <input id="lname" type="text" class="validate dataEntry" value="{{lname}}">
-                    <label for="lname">Last Name</label>
-                </div>
-                <div class="input-field col m6 s12">
-                    <input id="title" type="text" class="validate dataEntry" value="{{title}}">
-                    <label for="title">Title</label>
-                </div>
-                <div class="input-field col m6 s12">
-                    <input id="dob" type="text" class="validate dataEntry" value="{{dob}}">
-                    <label for="dob">DOB</label>
-                </div>
-                <div class="input-field col m6 s12">
-                    <textarea id="idCharacteristics" class="materialize-textarea dataEntry" value="{{idCharacteristics}}"></textarea>
-                    <label for="idCharacteristics">Identifying Characteristics</label>
-                </div>
+                        <label for="id" class="active">Patient ID</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <input id="fname" type="text" class="validate dataEntry" value="{{fname}}">
+                        <label for="fname">First Name</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <input id="lname" type="text" class="validate dataEntry" value="{{lname}}">
+                        <label for="lname">Last Name</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <input id="title" type="text" class="validate dataEntry" value="{{title}}">
+                        <label for="title">Title</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <input id="dob" type="text" class="validate dataEntry" value="{{dob}}">
+                        <label for="dob">DOB</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <textarea id="idCharacteristics" class="materialize-textarea dataEntry" value="{{idCharacteristics}}"></textarea>
+                        <label for="idCharacteristics">Identifying Characteristics</label>
+                    </div>
 
 
-                <h4>Critical Data</h4>
-                <div class="input-field col s12">
-                    <textarea id="allergies" class="materialize-textarea dataEntry" value="{{allergies}}"></textarea>
-                    <label for="allergies">Allergies<label>
+                    <h4>Critical Data</h4>
+                    <div class="input-field col s12">
+                        <textarea id="allergies" class="materialize-textarea dataEntry" value="{{allergies}}"></textarea>
+                        <label for="allergies">Allergies<label>
                 </div>
                 <div class="input-field col s12">
                     <textarea id="miscInfo" class="materialize-textarea dataEntry" value="{{miscInfo}}"></textarea>
                     <label for="miscInfo">Misc. Information</label>
+                    </div>
+
+                    <ul class="collection with-header" id="historyCollection">
+                        <li class="collection-header">
+                            <h4>Medical History</h4>
+                        </li>
+                        <!-- med history goes here -->
+                    </ul>
+                    <ul class="collapsible" data-collapsible="accordion" id="historyEntryAccordion">
+                        <li>
+                            <div class="collapsible-header" id="historyCollapseClick"><i class="material-icons">note_add</i>Add history entry</div>
+                            <div class="collapsible-body">
+                                <div class="input-field col s12">
+                                    <input id="newHistoryEntry" type="text">
+                                    <label for="newHistoryEntry">Label</label>
+                                </div>
+                                <div>
+                                    <p>
+                                        <input name="newHistoryColor" id="historyColorRed" type="radio" value="red" />
+                                        <label for="historyColorRed">Red</label>
+                                    </p>
+                                    <p>
+                                        <input name="newHistoryColor" id="historyColorYellow" type="radio" value="yellow" />
+                                        <label for="historyColorYellow">Yellow</label>
+                                    </p>
+                                    <p>
+                                        <input name="newHistoryColor" id="historyColorGreen" type="radio" value="green" selected/>
+                                        <label for="historyColorGreen">Green</label>
+                                    </p>
+                                </div>
+                                <a class="waves-effect waves-light btn" onclick="saveNewHistory();">Save</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-
-                <ul class="collection with-header" id="historyCollection">
-                    <li class="collection-header">
-                        <h4>Medical History</h4>
-                    </li>
-                    <!-- med history goes here -->
-                </ul>
-                <ul class="collapsible" data-collapsible="accordion" id="historyEntryAccordion">
-                    <li>
-                        <div class="collapsible-header" id="historyCollapseClick"><i class="material-icons">note_add</i>Add history entry</div>
-                        <div class="collapsible-body">
-                            <div class="input-field col s12">
-                                <input id="newHistoryEntry" type="text">
-                                <label for="newHistoryEntry">Label</label>
-                            </div>
-                            <div>
-                                <p>
-                                    <input name="newHistoryColor" id="historyColorRed" type="radio" value="red" />
-                                    <label for="historyColorRed">Red</label>
-                                </p>
-                                <p>
-                                    <input name="newHistoryColor" id="historyColorYellow" type="radio" value="yellow" />
-                                    <label for="historyColorYellow">Yellow</label>
-                                </p>
-                                <p>
-                                    <input name="newHistoryColor" id="historyColorGreen" type="radio" value="green" selected/>
-                                    <label for="historyColorGreen">Green</label>
-                                </p>
-                            </div>
-                            <a class="waves-effect waves-light btn" onclick="saveNewHistory();">Save</a>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
-    </div>
 
-      <div class="row tabTop" id="medicationTab">
-        <div class="col s12">
-            <div class="container">
-                <h4 class="tabTitle">Medications</h4>
+        <div class="row tabTop" id="medicationTab">
+            <div class="col s12">
+                <div class="container">
+                    <h4 class="tabTitle">Medications</h4>
 
+                </div>
             </div>
         </div>
-    </div>
 
-      <div class="row tabTop" id="diagnosticsTab">
-        <div class="col s12">
-            <div class="container">
-                <h4 class="tabTitle">Diagnostics</h4>
+        <div class="row tabTop" id="diagnosticsTab">
+            <div class="col s12">
+                <div class="container">
+                    <h4 class="tabTitle">Diagnostics</h4>
 
+                </div>
             </div>
         </div>
-    </div>
 
-      <div class="row tabTop" id="additionalTab">
-        <div class="col s12">
-            <div class="container">
-                <h4 class="tabTitle">Additional Data</h4>
+        <div class="row tabTop" id="additionalTab">
+            <div class="col s12">
+                <div class="container">
+                    <h4 class="tabTitle">Additional Data</h4>
 
+                </div>
             </div>
         </div>
-    </div>
     </script>
 </body>
 

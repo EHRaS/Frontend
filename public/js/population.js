@@ -1,4 +1,4 @@
-/* globals Materialize, Handlebars, globalDataObj, insertHistory, savePatient */
+/* globals Materialize, Handlebars, globalDataObj:true, insertHistory, savePatient */
 var pageActive = false;
 
 var editSaveTimeout = 0;
