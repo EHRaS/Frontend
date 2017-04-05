@@ -5,11 +5,12 @@ function fullTagDetected(cryptedContents) {
     "use strict";
     Materialize.toast('Decrypting tag...', 2000);
 
-    var jqxhr = $.get(server + 'uuid/decrypt', {
+    var jqxhr = $.post(server + 'uuid/decrypt', {
             uuid: cryptedContents
         })
         .always(function(newUUID) {
-            $('#UUID').val(newUUID);
+            console.log(newUUID.responseText)
+            $('#UUID').val(newUUID.responseText);
             $('#useTagButton').removeClass('disabled');
             Materialize.toast('Tag decrypted!', 1000);
         });
