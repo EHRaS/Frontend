@@ -6,6 +6,7 @@ function registerEditListeners() {
     "use strict";
     $('.dataEntry').keydown(function() {
         if (pageActive) {
+            // wipe out the timeout on each keydown so we only save after a second of no input
             clearTimeout(editSaveTimeout);
             editSaveTimeout = setTimeout(savePatient, 1000);
         }
