@@ -5,7 +5,6 @@ var https = require('https');
 var http = require('http');
 var fs = require('fs');
 var heatlamp = require('express-heatlamp');
-var hbs = require('hbs');
 
 var app = express();
 
