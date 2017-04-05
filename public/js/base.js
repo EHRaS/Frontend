@@ -20,19 +20,18 @@ function savePatient() {
 }
 
 function uploadProfile() {
-
     "use strict";
     // TODO
     // watch for file upload with js
-
-    $('#photoInput').onchange(function() {
+    $('#photoInput').change(function() {
+      console.log(data);
         // grab file
         // convert to data UI
         // stick into master object and save
     });
 
 
-    $('#photoInput').click();
+    $('#photoInput').click(); // ?
 
     // handle file upload
     // replace image

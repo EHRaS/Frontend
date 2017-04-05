@@ -3,6 +3,7 @@
 function loadPatient() {
     "use strict";
 
+    clearPage();
     // TODO: clear session key
 
     $('.tabTop').hide();

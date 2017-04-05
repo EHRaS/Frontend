@@ -2,16 +2,16 @@ function populatePage() {
     "use strict";
     globalDataObj["lname"] = "Wick";
 
-    // Compile Handlebars template and partial
+    // Compile Handlebars template
     var source = $("#toCompile").html();
     var template = Handlebars.compile(source);
-    // Handlebars.registerPartial("field", $("#field-partial").html());
-
     var compiled = template(globalDataObj);
     $("#compiledContainer").html(compiled);
-    Materialize.updateTextFields();
+    Materialize.updateTextFields(); // Ensures labels are properly set to active or inactive
 }
-
 function clearPage(){
-    // TODO: clear all data here; ready for new load into globalDataObj and call of populatePage
+      $('.dataEntry').each(function(){
+        $(this).val("");
+      });
+      globalDataObj = {};
 }
