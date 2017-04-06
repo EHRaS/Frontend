@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: auth.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: auth.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* globals Materialize, sha256, globalDataObj: true, populatePage, server, clearPage */
+
+/**
+ * Initialize patient load screen and clear all previous data.
+ */
+function loadPatient() {
+    "use strict";
+
+    clearPage();
+    document.cookie = 'sk=';
+
+    $('.tabTop').hide();
+    $('#loadPatientTabButton').show();
+    $('#loadPatientTab').show();
+
+    $('.tab').addClass('disabled');
+    $('.tabs').tabs('select_tab', 'loadPatientTab');
+
+    $('#saveButton').hide();
+
+    $('#UUID').val('');
+    $('#useTagButton').addClass('disabled');
+    $('#addDiagnostic').addClass('hidden');
+}
+
+/**
+ * Remove the patient load screen and enable the tabbed interface to browse and edit patient data
+ */
+function enablePage() {
+    "use strict";
+
+    $('#loadPatientTabButton').hide();
+
+    $('.tab').removeClass('disabled');
+    $('.tabs').tabs('select_tab', 'basicTab');
+
+    $('#saveButton').show();
+
+    $('.tabs').tabs();
+    $('#loadPatientTab').hide();
+}
+
+/**
+ * Save secondary credentials provided in the username and password input to a cookie. The username and password are concatenated with a colon and hashed with SHA256 before being put in a cookie called &lt;tt>secondaryAuth&lt;/tt>
+ */
+function saveSecondaryCredentials() {
+    "use strict";
+
+    var hash = sha256($('#secondaryPass').val() + ':' + $('#secondaryUser').val());
+    document.cookie = 'secondaryAuth=' + hash;
+    Materialize.toast('Secondary authentication saved!', 2000);
+    $('#secondaryAuthEntry').click();
+}
+
+/**
+ * Return the session key as retrieved from the &lt;tt>sk&lt;/tt> cookie
+ * @returns {string}
+ */
+function getSessionKey() {
+    "use strict";
+    return document.cookie.split('sk=')[1];
+}
+
+/**
+ * Request a session key, store it, and request all data for a certain UUID. Calls &lt;tt>populatePage()&lt;/tt> and &lt;tt>enablePage()&lt;/tt>
+ */
+function fetchData() {
+    "use strict";
+
+    var uuid = $('#UUID').val();
+
+    // get a session key
+    var jqxhr = $.get(server + 'session/' + uuid)
+        .always(function(data) {
+            if (data.status &amp;&amp; data.status !== 200) {
+                // not authorized
+                Materialize.toast("There was an authentication issue; please try again.", 5000);
+                return;
+            }
+
+            document.cookie = 'sk=' + data.responseText;
+
+            var jqxhr = $.get(server + 'data/' + uuid + '/' + getSessionKey())
+                .always(function(data) {
+                    if (data.status &amp;&amp; data.status !== 200 &amp;&amp; data.status !== 304) {
+                        // not authorized
+                        Materialize.toast("There was a data load issue; please try again.", 5000);
+                        return;
+                    }
+
+                    globalDataObj = JSON.parse(data.patientData);
+                    globalDataObj.uuid = uuid;
+
+                    populatePage();
+                    enablePage();
+                });
+        });
+}
+
+// handle manual UUID entry
+$('#UUID').keydown(function() {
+    "use strict";
+    if ($('#UUID').val().length > 0) {
+        $('#useTagButton').removeClass('disabled');
+    } else {
+        $('#useTagButton').addClass('disabled');
+    }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearPage">clearPage</a></li><li><a href="global.html#emptyTagDetected">emptyTagDetected</a></li><li><a href="global.html#enablePage">enablePage</a></li><li><a href="global.html#fetchData">fetchData</a></li><li><a href="global.html#fullTagDetected">fullTagDetected</a></li><li><a href="global.html#getSessionKey">getSessionKey</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#insertDiagnostic">insertDiagnostic</a></li><li><a href="global.html#insertHistory">insertHistory</a></li><li><a href="global.html#loadPatient">loadPatient</a></li><li><a href="global.html#populatePage">populatePage</a></li><li><a href="global.html#registerEditListeners">registerEditListeners</a></li><li><a href="global.html#saveNewDiagnostic">saveNewDiagnostic</a></li><li><a href="global.html#saveNewHistory">saveNewHistory</a></li><li><a href="global.html#savePatient">savePatient</a></li><li><a href="global.html#saveSecondaryCredentials">saveSecondaryCredentials</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#writeTag">writeTag</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Apr 05 2017 19:29:28 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
