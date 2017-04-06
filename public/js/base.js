@@ -1,6 +1,6 @@
 /* globals Materialize, sha256, loadPatient, clearPage, getSessionKey */
 var globalDataObj = {};
-var server = document.location.protocol + '//' + document.location.hostname + ':3000';
+var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
 $('#serverAddress').val(server);
 
 function savePatient(notify) {
