@@ -87,12 +87,18 @@ function insertHistory(text, color, date) {
  * @param {string} date The date of the diagnostic (in any format)
  * @param {string} url The url of the image to be associated with the diagnostic entry
  * @param {string} detail Details of the diagnostic
+ * @param {string} datatype Type of embedded diagnostic content ('url' or 'frame' -- frame indicates an iFrame, url indicates an embedded image)
  */
-function insertDiagnostic(title, date, url, detail) {
+function insertDiagnostic(title, date, url, detail, datatype) {
     "use strict";
-    var itemHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
+    var urlHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
+    var itemHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <iframe class="activator" src="' + url + '"></iframe </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
 
-    $('#diagnosticContainer').append(itemHTML); // place it
+    if (datatype == 'url') {
+        $('#diagnosticContainer').append(urlHTML); // place iframe
+    } else {
+        $('#diagnosticContainer').append(itemHTML); // place image
+    }
 
     $('#newDiagnosticEntry').val(''); // empty the input form
     $('#newDiagnosticDate').val('');
@@ -127,9 +133,10 @@ function saveNewDiagnostic() {
     var date = $('#newDiagnosticDate').val();
     var url = $('#newDiagnosticDataUrl').val();
     var detail = $('#newDiagnosticDetail').val();
+    var datatype = $('[name="newDiagnosticUrlType"]:checked').val();
 
     // call insert code
-    insertDiagnostic(title, date, url, detail);
+    insertDiagnostic(title, date, url, detail, datatype);
     Materialize.toast('Diagnostic record added', 2000);
     savePatient(false);
 }

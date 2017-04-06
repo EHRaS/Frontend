@@ -31,3 +31,7 @@
 .hidden {
     display: none;
 }
+
+iframe.activator{
+    min-height: 400px;
+}
