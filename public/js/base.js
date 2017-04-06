@@ -3,6 +3,10 @@ var globalDataObj = {};
 var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
 $('#serverAddress').val(server);
 
+/**
+ * Save all patient data on the page to the global object and submit the global object to the server
+ * @param {boolean} notify If true, a "Patient saved." toast will appear after a successful save.
+ */
 function savePatient(notify) {
     "use strict";
     // load into globalDataObj
@@ -39,6 +43,9 @@ function savePatient(notify) {
         });
 }
 
+/**
+ * Called when the profile picture file input is changed. Handles conversion of the image to a data URI and insertion into the global data object.
+ */
 function uploadProfile() {
     "use strict";
     // TODO
@@ -58,6 +65,12 @@ function uploadProfile() {
     savePatient(true);
 }
 
+/**
+ * Insert a history entry into the page
+ * @param {string} text The message for the history entry
+ * @param {string} color The color of the message (red, green, yellow, or empty string)
+ * @param {string} date The date of the message (in any format)
+ */
 function insertHistory(text, color, date) {
     "use strict";
     var itemHTML = $.parseHTML('<li class="collection-item historyEntry"><span class="badge lighten-4 ' + color + '">' + date + '</span><a onclick="this.parentNode.remove(); savePatient(false);"><i class="material-icons historyDeleteIcon">delete</i></a><span>' + text + '</span></li>');
@@ -68,6 +81,13 @@ function insertHistory(text, color, date) {
     $('#historyCollapseClick').click(); // collapse the accordion. Gimpy, I know.
 }
 
+/**
+ * Insert a diagnostic entry into the page
+ * @param {string} title The title for the diagnostic entry
+ * @param {string} date The date of the diagnostic (in any format)
+ * @param {string} url The url of the image to be associated with the diagnostic entry
+ * @param {string} detail Details of the diagnostic
+ */
 function insertDiagnostic(title, date, url, detail) {
     "use strict";
     var itemHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
@@ -81,6 +101,9 @@ function insertDiagnostic(title, date, url, detail) {
     $('#diagnosticCollapseClick').click(); // collapse the accordion. Gimpy, I know.
 }
 
+/**
+ * Read history input form from the page and generate a history entry, then reset the entry form. Calls insertHistory()
+ */
 function saveNewHistory() {
     "use strict";
 
@@ -94,6 +117,9 @@ function saveNewHistory() {
     savePatient(false);
 }
 
+/**
+ * Read diagnostic input form from the page and generate a diagnostic entry, then reset the entry form. Calls insertDiagnostic()
+ */
 function saveNewDiagnostic() {
     "use strict";
 

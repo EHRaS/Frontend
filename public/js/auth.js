@@ -1,5 +1,8 @@
 /* globals Materialize, sha256, globalDataObj: true, populatePage, server, clearPage */
 
+/**
+ * Initialize patient load screen and clear all previous data.
+ */
 function loadPatient() {
     "use strict";
 
@@ -20,6 +23,9 @@ function loadPatient() {
     $('#addDiagnostic').addClass('hidden');
 }
 
+/**
+ * Remove the patient load screen and enable the tabbed interface to browse and edit patient data
+ */
 function enablePage() {
     "use strict";
 
@@ -34,6 +40,9 @@ function enablePage() {
     $('#loadPatientTab').hide();
 }
 
+/**
+ * Save secondary credentials provided in the username and password input to a cookie. The username and password are concatenated with a colon and hashed with SHA256 before being put in a cookie called <tt>secondaryAuth</tt>
+ */
 function saveSecondaryCredentials() {
     "use strict";
 
@@ -43,11 +52,18 @@ function saveSecondaryCredentials() {
     $('#secondaryAuthEntry').click();
 }
 
+/**
+ * Return the session key as retrieved from the <tt>sk</tt> cookie
+ * @returns {string}
+ */
 function getSessionKey() {
     "use strict";
     return document.cookie.split('sk=')[1];
 }
 
+/**
+ * Request a session key, store it, and request all data for a certain UUID. Calls <tt>populatePage()</tt> and <tt>enablePage()</tt>
+ */
 function fetchData() {
     "use strict";
 

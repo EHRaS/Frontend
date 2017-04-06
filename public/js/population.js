@@ -1,8 +1,10 @@
 /* globals Materialize, Handlebars, globalDataObj:true, insertHistory, savePatient */
 var pageActive = false;
-
 var editSaveTimeout = 0;
 
+/**
+ * Register event listeners to autosave the page after a delay post-input
+ */
 function registerEditListeners() {
     "use strict";
     $('.dataEntry').keydown(function() {
@@ -14,6 +16,9 @@ function registerEditListeners() {
     });
 }
 
+/**
+ * Insert patient data from the global object into the page
+ */
 function populatePage() {
     "use strict";
 
@@ -42,6 +47,9 @@ function populatePage() {
     registerEditListeners();
 }
 
+/**
+ * Empty the entire page to prepare for another patient
+ */
 function clearPage() {
     "use strict";
     $('.dataEntry').each(function() {

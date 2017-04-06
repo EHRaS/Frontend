@@ -1,6 +1,9 @@
 /* globals Materialize, server, NDEF, NfcUtils, MozNDEFRecord */
 
-// tag has contents
+/**
+ * Decrypt and insert into UUID input the contents of a tag
+ * @param {string} cryptedContents The encrypted contents of the tag
+ */
 function fullTagDetected(cryptedContents) {
     "use strict";
     Materialize.toast('Decrypting tag...', 2000);
@@ -16,6 +19,11 @@ function fullTagDetected(cryptedContents) {
         });
 }
 
+/**
+ * Write a given data stream to a tag
+ * @param {string} contents The contents to be written to the tag
+ * @param {Object} tagObj An NFCTag object to write to
+ */
 function writeTag(contents, tagObj) {
     "use strict";
 
@@ -37,7 +45,10 @@ function writeTag(contents, tagObj) {
     fullTagDetected(contents);
 }
 
-// tag has no contents
+/**
+ * Write a newly generated and encrypted UUID to a given tag
+ * @param {Object} tagObj An NFCTag object to write to
+ */
 function emptyTagDetected(tagObj) {
     "use strict";
 
