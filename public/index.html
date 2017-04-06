@@ -65,7 +65,18 @@
                 <hr />
                 <ul class="collapsible" data-collapsible="expandable">
                     <li>
-                        <div class="collapsible-header active" id="secondaryAuthEntry"><i class="material-icons">perm_identity</i>Secondary Authentication</div>
+                        <div class="collapsible-header" id="serverSelection"><i class="material-icons">settings_input_composite</i>Server Selection</div>
+                        <div class="collapsible-body">
+                            <div class="row">
+                                <form>
+                                    <label for="serverAddress">Server Address</label>
+                                    <input id="serverAddress" oninput="server = this.value;" type="text">
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header" id="secondaryAuthEntry"><i class="material-icons">perm_identity</i>Secondary Authentication</div>
                         <div class="collapsible-body">
                             <p>If your organization has provided you with secondary credentials, please enter them here.</p>
                             <div class="row">
