@@ -1,4 +1,4 @@
-/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey */
+/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW*/
 var globalDataObj = {};
 var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
 $('#serverAddress').val(server);
@@ -48,12 +48,14 @@ function savePatient(notify) {
  */
 function uploadProfile() {
     "use strict";
-    // TODO
     // watch for file upload with js
-    $('#photoInput').change(function() {
+    $('#photoInput').change(function(e) {
         // grab file
+
         // convert to data UI
         // stick into master object and save
+        handlePhotoInput(e);
+
     });
 
 
@@ -64,6 +66,40 @@ function uploadProfile() {
     Materialize.toast('Image updated', 1000);
     savePatient(true);
 }
+/**
+ * Get the data URI from the profile image canvas
+ */
+function getPhotoDataURI() {
+    var canvas = document.getElementById("photoCanvas");
+    return canvas.toDataURL('image/png');
+}
+/**
+ * Handle profile image submission
+ * @param {Event} e The photo event to be handled (contains the image source)
+ */
+function handlePhotoInput(event) {
+    // TODO Enforce max img dimensions
+    var canvas = document.getElementById("photoCanvas");
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previously rendered image
+    var img = new Image;
+    img.src = URL.createObjectURL(event.target.files[0]);
+    // Draw image and save data URI to global object
+    img.onload = function() {
+        if (img.naturalHeight > photoMaxH || img.naturalWidth > photoMaxW) {
+            ctx.drawImage(img, 0, 0, photoMaxH, photoMaxW);
+        } else {
+            ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
+        }
+        ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
+        console.log('Drew image:' + img.src);
+        var uri = getPhotoDataURI();
+        globalDataObj.photoURI = uri;
+        savePatient(true);
+        console.log(globalDataObj);
+    }
+}
+
 
 /**
  * Insert a history entry into the page
