@@ -72,6 +72,9 @@ function populatePage() {
     registerEditListeners();
     loadImage();
 
+    // clear out image data to conserve payload size
+    delete(globalDataObj.photoURI);
+
 }
 
 /**
