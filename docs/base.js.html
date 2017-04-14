@@ -26,7 +26,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey */
+            <pre class="prettyprint source linenums"><code>/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW*/
 var globalDataObj = {};
 var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
 $('#serverAddress').val(server);
@@ -76,12 +76,14 @@ function savePatient(notify) {
  */
 function uploadProfile() {
     "use strict";
-    // TODO
     // watch for file upload with js
-    $('#photoInput').change(function() {
+    $('#photoInput').change(function(e) {
         // grab file
+
         // convert to data UI
         // stick into master object and save
+        handlePhotoInput(e);
+
     });
 
 
@@ -92,6 +94,40 @@ function uploadProfile() {
     Materialize.toast('Image updated', 1000);
     savePatient(true);
 }
+/**
+ * Get the data URI from the profile image canvas
+ */
+function getPhotoDataURI() {
+    var canvas = document.getElementById("photoCanvas");
+    return canvas.toDataURL('image/png');
+}
+/**
+ * Handle profile image submission
+ * @param {Event} e The photo event to be handled (contains the image source)
+ */
+function handlePhotoInput(event) {
+    // TODO Enforce max img dimensions
+    var canvas = document.getElementById("photoCanvas");
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previously rendered image
+    var img = new Image;
+    img.src = URL.createObjectURL(event.target.files[0]);
+    // Draw image and save data URI to global object
+    img.onload = function() {
+        if (img.naturalHeight > photoMaxH || img.naturalWidth > photoMaxW) {
+            ctx.drawImage(img, 0, 0, photoMaxH, photoMaxW);
+        } else {
+            ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
+        }
+        ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
+        console.log('Drew image:' + img.src);
+        var uri = getPhotoDataURI();
+        globalDataObj.photoURI = uri;
+        savePatient(true);
+        console.log(globalDataObj);
+    }
+}
+
 
 /**
  * Insert a history entry into the page
@@ -183,13 +219,13 @@ $(document).ready(function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearPage">clearPage</a></li><li><a href="global.html#emptyTagDetected">emptyTagDetected</a></li><li><a href="global.html#enablePage">enablePage</a></li><li><a href="global.html#fetchData">fetchData</a></li><li><a href="global.html#fullTagDetected">fullTagDetected</a></li><li><a href="global.html#getSessionKey">getSessionKey</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#insertDiagnostic">insertDiagnostic</a></li><li><a href="global.html#insertHistory">insertHistory</a></li><li><a href="global.html#loadPatient">loadPatient</a></li><li><a href="global.html#populatePage">populatePage</a></li><li><a href="global.html#registerEditListeners">registerEditListeners</a></li><li><a href="global.html#saveNewDiagnostic">saveNewDiagnostic</a></li><li><a href="global.html#saveNewHistory">saveNewHistory</a></li><li><a href="global.html#savePatient">savePatient</a></li><li><a href="global.html#saveSecondaryCredentials">saveSecondaryCredentials</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#writeTag">writeTag</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearPage">clearPage</a></li><li><a href="global.html#emptyTagDetected">emptyTagDetected</a></li><li><a href="global.html#enablePage">enablePage</a></li><li><a href="global.html#fetchData">fetchData</a></li><li><a href="global.html#fullTagDetected">fullTagDetected</a></li><li><a href="global.html#getPhotoDataURI">getPhotoDataURI</a></li><li><a href="global.html#getSessionKey">getSessionKey</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#handlePhotoInput">handlePhotoInput</a></li><li><a href="global.html#insertDiagnostic">insertDiagnostic</a></li><li><a href="global.html#insertHistory">insertHistory</a></li><li><a href="global.html#loadImage">loadImage</a></li><li><a href="global.html#loadPatient">loadPatient</a></li><li><a href="global.html#populatePage">populatePage</a></li><li><a href="global.html#registerEditListeners">registerEditListeners</a></li><li><a href="global.html#saveNewDiagnostic">saveNewDiagnostic</a></li><li><a href="global.html#saveNewHistory">saveNewHistory</a></li><li><a href="global.html#savePatient">savePatient</a></li><li><a href="global.html#saveSecondaryCredentials">saveSecondaryCredentials</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#writeTag">writeTag</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Apr 06 2017 01:27:00 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Apr 14 2017 11:07:03 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
