@@ -43,6 +43,43 @@ function savePatient(notify) {
         });
 }
 
+
+/**
+ * Get the data URI from the profile image canvas
+ */
+function getPhotoDataURI() {
+    "use strict";
+    var canvas = document.getElementById("photoCanvas");
+    return canvas.toDataURL('image/png');
+}
+/**
+ * Handle profile image submission
+ * @param {Event} e The photo event to be handled (contains the image source)
+ */
+function handlePhotoInput(event) {
+    "use strict";
+    // TODO Enforce max img dimensions
+    var canvas = document.getElementById("photoCanvas");
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previously rendered image
+    var img = new Image();
+    img.src = URL.createObjectURL(event.target.files[0]);
+
+    // Draw image and save data URI to global object
+    img.onload = function() {
+        if (img.naturalHeight > photoMaxH || img.naturalWidth > photoMaxW) {
+            ctx.drawImage(img, 0, 0, photoMaxH, photoMaxW);
+        } else {
+            ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
+        }
+
+        var uri = getPhotoDataURI();
+        globalDataObj.photoURI = uri;
+        savePatient(true);
+        console.log(globalDataObj);
+    };
+}
+
 /**
  * Called when the profile picture file input is changed. Handles conversion of the image to a data URI and insertion into the global data object.
  */
@@ -65,39 +102,6 @@ function uploadProfile() {
     // replace image
     Materialize.toast('Image updated', 1000);
     savePatient(true);
-}
-/**
- * Get the data URI from the profile image canvas
- */
-function getPhotoDataURI() {
-    var canvas = document.getElementById("photoCanvas");
-    return canvas.toDataURL('image/png');
-}
-/**
- * Handle profile image submission
- * @param {Event} e The photo event to be handled (contains the image source)
- */
-function handlePhotoInput(event) {
-    // TODO Enforce max img dimensions
-    var canvas = document.getElementById("photoCanvas");
-    var ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previously rendered image
-    var img = new Image;
-    img.src = URL.createObjectURL(event.target.files[0]);
-    // Draw image and save data URI to global object
-    img.onload = function() {
-        if (img.naturalHeight > photoMaxH || img.naturalWidth > photoMaxW) {
-            ctx.drawImage(img, 0, 0, photoMaxH, photoMaxW);
-        } else {
-            ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
-        }
-        ctx.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
-        console.log('Drew image:' + img.src);
-        var uri = getPhotoDataURI();
-        globalDataObj.photoURI = uri;
-        savePatient(true);
-        console.log(globalDataObj);
-    }
 }
 
 
@@ -130,7 +134,7 @@ function insertDiagnostic(title, date, url, detail, datatype) {
     var urlHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
     var itemHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <iframe class="activator" src="' + url + '"></iframe </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
 
-    if (datatype == 'url') {
+    if (datatype === 'url') {
         $('#diagnosticContainer').append(urlHTML); // place iframe
     } else {
         $('#diagnosticContainer').append(itemHTML); // place image

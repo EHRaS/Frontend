@@ -22,6 +22,7 @@ function registerEditListeners() {
  * Load profile image into canvas element upon DOM ready
  */
 function loadImage() {
+    "use strict";
     $("#photoCanvas").css("display", "block");
     var target = document.getElementById("photoCanvas").getContext('2d');
     var img = new Image();
