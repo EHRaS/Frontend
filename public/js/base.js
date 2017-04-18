@@ -53,7 +53,7 @@ function getPhotoDataURI() {
     return canvas.toDataURL('image/png');
 }
 /**
- * Handle profile image submission
+ * Handle profile image submission drawing to canvas and saving
  * @param {Event} e The photo event to be handled (contains the image source)
  */
 function handlePhotoInput(event) {
