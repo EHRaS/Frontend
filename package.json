@@ -1,30 +1,33 @@
 {
-  "name": "ehras",
-  "version": "0.0.1",
-  "private": true,
-  "license": "MIT",
-  "main": "index.js",
-  "author": "",
-  "devDependencies": {
-    "del": "^2.0.2",
-    "jshint-stylish": "^2.0.1"
-  },
-  "dependencies": {
-    "compression": "^1.6.0",
-    "express": "^4.13.3",
-    "express-heatlamp": "*",
-    "serve-static": "^1.10.0"
-  },
-  "description": "EHRAS frontend",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/EHRaS/Frontend.git"
-  },
-  "bugs": {
-    "url": "https://github.com/EHRaS/Frontend/issues"
-  },
-  "homepage": "https://github.com/EHRaS/Frontend#readme"
+    "name": "ehras",
+    "version": "0.0.1",
+    "private": true,
+    "license": "MIT",
+    "main": "index.js",
+    "author": "",
+    "devDependencies": {
+        "del": "^2.0.2",
+        "jshint-stylish": "^2.0.1"
+    },
+    "dependencies": {
+        "compression": "^1.6.0",
+        "express": "^4.13.3",
+        "express-heatlamp": "*",
+        "serve-static": "^1.10.0"
+    },
+    "description": "EHRAS frontend",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/EHRaS/Frontend.git"
+    },
+    "bugs": {
+        "url": "https://github.com/EHRaS/Frontend/issues"
+    },
+    "scripts": {
+        "start": "node index.js"
+    },
+    "homepage": "https://github.com/EHRaS/Frontend#readme"
 }
