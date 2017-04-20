@@ -58,7 +58,6 @@ function getPhotoDataURI() {
  */
 function handlePhotoInput(event) {
     "use strict";
-    // TODO Enforce max img dimensions
     var canvas = document.getElementById("photoCanvas");
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previously rendered image

@@ -30,7 +30,7 @@ function loadImage() {
     if (globalDataObj.hasOwnProperty('photoURI')) {
         img.src = globalDataObj.photoURI;
     } else {
-        img.src = "placeholder.png"; // TODO find better placeholder image
+        img.src = "placeholder.png"; 
     }
 
     img.onload = function() {
