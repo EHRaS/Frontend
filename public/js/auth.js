@@ -88,7 +88,7 @@ function fetchData() {
                         return;
                     }
 
-                    globalDataObj = JSON.parse(data.patientData);
+                    globalDataObj = data;
                     globalDataObj.uuid = uuid;
 
                     populatePage();
