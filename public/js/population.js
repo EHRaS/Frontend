@@ -26,19 +26,19 @@ function loadImage() {
     $("#photoCanvas").css("display", "block");
     var target = document.getElementById("photoCanvas").getContext('2d');
     var img = new Image();
-    console.log(globalDataObj);
+
     if (globalDataObj.hasOwnProperty('photoURI')) {
         img.src = globalDataObj.photoURI;
     } else {
         img.src = "placeholder.png"; // TODO find better placeholder image
     }
+
     img.onload = function() {
         if (img.naturalHeight > photoMaxH || img.naturalWidth > photoMaxW) {
             target.drawImage(img, 0, 0, photoMaxH, photoMaxW);
         } else {
             target.drawImage(img, 0, 0, img.naturalHeight, img.naturalWidth);
         }
-        console.log("Loaded: " + img.src);
     };
 
 }
