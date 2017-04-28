@@ -20,4 +20,4 @@ http.createServer(app).listen(8080);
 //   ca: fs.readFileSync('ssl/bundle.ca-bundle')
 // }, app).listen(8080);
 
-console.log('Listening on :8080');
+console.log('EHRaS Frontend on :8080');
