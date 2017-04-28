@@ -1,7 +1,7 @@
 /* globals Materialize, Handlebars, globalDataObj:true, insertHistory, savePatient */
 var pageActive = false;
 var editSaveTimeout = 0;
-var photoMaxH = 150;
+var photoMaxH = 200;
 var photoMaxW = 200;
 
 /**
@@ -30,7 +30,7 @@ function loadImage() {
     if (globalDataObj.hasOwnProperty('photoURI')) {
         img.src = globalDataObj.photoURI;
     } else {
-        img.src = "placeholder.png"; 
+        img.src = "placeholder.png";
     }
 
     img.onload = function() {
