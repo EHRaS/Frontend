@@ -1,4 +1,4 @@
-/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW*/
+/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW, fetchData*/
 var globalDataObj = {};
 var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
 $('#serverAddress').val(server);
@@ -183,4 +183,10 @@ function saveNewDiagnostic() {
 $(document).ready(function() {
     "use strict";
     $(".button-collapse").sideNav();
+
+    // check for auto load
+    if(location.hash.length > 0){
+        $('#UUID').val(location.hash.substring(1));
+        fetchData();
+    }
 });
