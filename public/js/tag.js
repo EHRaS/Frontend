@@ -12,7 +12,6 @@ function fullTagDetected(cryptedContents) {
             uuid: cryptedContents
         })
         .always(function(newUUID) {
-            console.log(newUUID.responseText)
             $('#UUID').val(newUUID.responseText);
             $('#useTagButton').removeClass('disabled');
             Materialize.toast('Tag decrypted!', 1000);
