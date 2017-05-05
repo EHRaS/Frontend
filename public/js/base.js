@@ -1,4 +1,8 @@
-/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW, fetchData*/
+/* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW, fetchData, testingState*/
+var testingState = {
+    historyEntries: 0,
+    diagnosticEntries: 0
+}; // For tracking page state
 var globalDataObj = {};
 var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
 $('#serverAddress').val(server);
@@ -75,7 +79,6 @@ function handlePhotoInput(event) {
         var uri = getPhotoDataURI();
         globalDataObj.photoURI = uri;
         savePatient(true);
-        console.log(globalDataObj);
     };
 }
 
@@ -84,21 +87,15 @@ function handlePhotoInput(event) {
  */
 function uploadProfile() {
     "use strict";
-    // watch for file upload with js
+    // watch for file upload
     $('#photoInput').change(function(e) {
-        // grab file
-
-        // convert to data UI
+        // convert to data URI
         // stick into master object and save
         handlePhotoInput(e);
-
     });
 
+    $('#photoInput').click();
 
-    $('#photoInput').click(); // ?
-
-    // handle file upload
-    // replace image
     Materialize.toast('Image updated', 1000);
     savePatient(true);
 }
@@ -118,6 +115,8 @@ function insertHistory(text, color, date) {
 
     $('#newHistoryEntry').val(''); // empty the input form
     $('#historyCollapseClick').click(); // collapse the accordion. Gimpy, I know.
+
+    testingState.historyEntries += 1;
 }
 
 /**
@@ -130,8 +129,8 @@ function insertHistory(text, color, date) {
  */
 function insertDiagnostic(title, date, url, detail, datatype) {
     "use strict";
-    var urlHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); Materialize.toast("Diagnostic record deleted.", 2000); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
-    var itemHTML = $.parseHTML('<div class="card"> <div class="card-image waves-effect waves-block waves-light"> <iframe class="activator" src="' + url + '"></iframe </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
+    var urlHTML = $.parseHTML('<div class="card diagEntry"> <div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + url + '"> </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); Materialize.toast("Diagnostic record deleted.", 2000); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
+    var itemHTML = $.parseHTML('<div class="card diagEntry"> <div class="card-image waves-effect waves-block waves-light"> <iframe class="activator" src="' + url + '"></iframe </div> <div class="card-content"> <span class="card-title activator grey-text text-darken-4">' + title + '</span> <p>' + date + '</p> </div> <div class="card-reveal"> <span class="card-title grey-text text-darken-4">' + title + '<i class="material-icons right">close</i></span> <p>' + detail + '</p><br /><br /><a onclick="this.parentNode.parentNode.remove(); savePatient(false);">Delete diagnostic entry</a> </div> </div>');
 
     if (datatype === 'url') {
         $('#diagnosticContainer').append(urlHTML); // place iframe
@@ -144,6 +143,9 @@ function insertDiagnostic(title, date, url, detail, datatype) {
     $('#newDiagnosticDataUrl').val('');
     $('#newDiagnosticDetail').val('');
     $('#diagnosticCollapseClick').click(); // collapse the accordion. Gimpy, I know.
+
+    testingState.diagnosticEntries += 1;
+
 }
 
 /**
@@ -160,6 +162,7 @@ function saveNewHistory() {
     insertHistory(text, color, date);
     Materialize.toast('History record added', 2000);
     savePatient(false);
+
 }
 
 /**
@@ -185,7 +188,7 @@ $(document).ready(function() {
     $(".button-collapse").sideNav();
 
     // check for auto load
-    if(location.hash.length > 0){
+    if (location.hash.length > 0) {
         $('#UUID').val(location.hash.substring(1));
         fetchData();
     }

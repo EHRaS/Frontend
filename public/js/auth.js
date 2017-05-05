@@ -21,6 +21,8 @@ function loadPatient() {
     $('#UUID').val('');
     $('#useTagButton').addClass('disabled');
     $('#addDiagnostic').addClass('hidden');
+
+    testingState.init = true;
 }
 
 /**
@@ -38,6 +40,8 @@ function enablePage() {
 
     $('.tabs').tabs();
     $('#loadPatientTab').hide();
+
+    testingState.init = false;
 }
 
 /**
@@ -50,6 +54,8 @@ function saveSecondaryCredentials() {
     document.cookie = 'secondaryAuth=' + hash;
     Materialize.toast('Secondary authentication saved!', 2000);
     $('#secondaryAuthEntry').click();
+
+    testingState.authorized = true;
 }
 
 /**
@@ -86,6 +92,8 @@ function fetchData() {
                         // not authorized
                         Materialize.toast("There was a data load issue; please try again.", 5000);
                         return;
+                    }else{
+                        testingState.dataReceived = true;
                     }
 
                     globalDataObj = data;

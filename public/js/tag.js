@@ -1,4 +1,4 @@
-/* globals Materialize, server, NDEF, NfcUtils, MozNDEFRecord */
+/* globals Materialize, server, NDEF, NfcUtils, MozNDEFRecord, testingState */
 
 /**
  * Decrypt and insert into UUID input the contents of a tag

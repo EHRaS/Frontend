@@ -1,4 +1,4 @@
-/* globals Materialize, Handlebars, globalDataObj:true, insertHistory, savePatient */
+/* globals Materialize, Handlebars, globalDataObj:true, insertHistory, savePatient, testingState */
 var pageActive = false;
 var editSaveTimeout = 0;
 var photoMaxH = 200;
