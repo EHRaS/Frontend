@@ -24,6 +24,6 @@ var tests = [
 
 
 
-$(document).ready(function() {
-    runTests(tests);
-});
+// $(document).ready(function() {
+//     runTests(tests);
+// });
