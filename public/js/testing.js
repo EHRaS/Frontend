@@ -1,48 +1,53 @@
-globalTimeout = 1000;
-
+globalTimeout = 500;
+asyncAccum = 1;
 var tests = [
-    // This test will fail if the test profile isn't present
     function loadTestProfile() {
-        $('#UUID').val('testing123');
-        $('#useTagButton').removeClass('disabled');
-        Materialize.toast('Autologin!', 1000);
+        loadPatient();
+        $('#UUID').val('testProfile');
         fetchData();
 
-        // label, expected, actual
         setTimeout(function() {
-            testResults.push(['RECEIVE JSON OBJECT', false, $.isEmptyObject(globalDataObj)]);
-        }, 1 * globalTimeout);
+            testResults.push(['RECEIVE TEST PROFILE DATA', $.isEmptyObject(globalDataObj), false]);
+            console.log("[receiveData]", globalDataObj);
+        }, (testCount + asyncAccum) * globalTimeout);
     },
-    function simTag() {
-        var tag = "U2FsdGVkX1+XCpSVvv0N7a7tmOBB7w7WZY5Zvyrldl/sp3fttJNCldKglR+TbnHMoM2VhWWTv339TzbB2hAvOQ==";
-        fullTagDetected(tag);
-
+    function simulateTag() {
         setTimeout(function() {
-            testResults.push(['DECRYPT TAG', "36c8b701-fad4-40fa-83c7-9a525ad7a152", $("#UUID").val()]);
-        }, 2 * globalTimeout);
+            var tag = "U2FsdGVkX1+XCpSVvv0N7a7tmOBB7w7WZY5Zvyrldl/sp3fttJNCldKglR+TbnHMoM2VhWWTv339TzbB2hAvOQ==";
+            fullTagDetected(tag);
+
+            setTimeout(function() {
+                testResults.push(['DECRYPT TAG', $("#UUID").val(), "36c8b701-fad4-40fa-83c7-9a525ad7a152"]);
+                console.log("[decrpytTag]", globalDataObj);
+            }, globalTimeout);
+        }, (testCount + asyncAccum) * globalTimeout);
+        asyncAccum++;
     },
     function clearProfile() {
-        // This needs to run after first test, so it's placed in setTimeout block
         setTimeout(function() {
-            loadPatient();
-
-            testResults.push(['CLEAR PAGE', true, testingState.init]);
-        }, 3 * globalTimeout);
+            clearPage();
+            testResults.push(['CLEAR PAGE', !testingState.init && !pageActive, true]);
+            console.log("[clearPage]", globalDataObj);
+        }, (testCount + asyncAccum) * globalTimeout);
     },
     function loadRandomProfile() {
+        // Create random UUID
         var randUUID = Math.floor(Math.random() * 99999999) + 10;
         setTimeout(function() {
             loadPatient();
-            var testA = testingState.init;
-            enablePage();
-            var testB = !testingState.init;
+            var mainPageFlag = testingState.init;
             $("#UUID").val(randUUID);
             fetchData();
-            var testC = testingState.dataReceived;
+            var profilePageFlag, dataFetchedFlag;
+            setTimeout(function() {
+                profilePageFlag = !testingState.init;
+                dataFetchedFlag = testingState.dataReceived;
+                testResults.push(['LOAD RANDOM PROFILE', (mainPageFlag && profilePageFlag && dataFetchedFlag), true]);
+                console.log("[loadRand]", globalDataObj);
+            }, globalTimeout);
 
-
-            testResults.push(['LOAD RANDOM PROFILE', true, (testA && testB && testC)]);
-        }, 4 * globalTimeout);
+        }, (testCount + asyncAccum) * globalTimeout);
+        asyncAccum++;
     },
     function addHistoryEntries() {
         setTimeout(function() {
@@ -51,26 +56,97 @@ var tests = [
             insertHistory("123", "orange", "11/7/15");
 
 
-            testResults.push(['ADD HISTORY ENTRIES', $('.historyEntry').length, testingState.historyEntries]);
-        }, 5 * globalTimeout);
+            testResults.push(['ADD HISTORY ENTRIES', testingState.historyEntries, $('.historyEntry').length]);
+            console.log("[addHistory]", globalDataObj);
+        }, (testCount + asyncAccum) * globalTimeout);
     },
     function addDiagnosticEntries() {
         setTimeout(function() {
             $("#diagnosticTab").click()
             insertDiagnostic("Test Title", "9/15/17", "", "Details", "HTML");
+            insertDiagnostic("Test Title2", "9/15/18", "", "Details", "HTML");
+            insertDiagnostic("Test Title3", "9/15/19", "", "Details", "HTML");
+            insertDiagnostic("Test Title4", "9/16/17", "", "Details", "HTML");
+            insertDiagnostic("Test Title5", "9/14/17", "", "More Details", "URL");
+
 
             // REVIEW: For some reason .length is overcounting this class...?
             var entries = 0;
-            $(".diagEntry").each(function(){
+            $(".diagEntry").each(function() {
                 entries += 1;
             })
 
-            testResults.push(['ADD DIAGNOSTIC ENtRIES', entries, 1]);
-        }, 6 * globalTimeout);
+            testResults.push(['ADD DIAGNOSTIC ENTRIES', 5, entries]);
+            console.log("[addDiag]", globalDataObj);
+
+        }, (testCount + asyncAccum) * globalTimeout);
+    },
+    // Must run after addHistory and addDiagnostic tests
+    function checkSaving() {
+        setTimeout(function() {
+            savePatient(false);
+            // Wait for save
+            setTimeout(function() {
+                var saveRand = $("#UUID").val();
+
+                loadPatient(); // Start fresh
+                $("#UUID").val(saveRand);
+                fetchData();
+                // Wait for fetch
+                setTimeout(function() {
+                    var a = $("#historyContainer").children().length;
+                    var b = $("#diagnosticContainer").children().length;
+                    testResults.push(["SAVE AND FETCH PATIENT", (a == 3) && (b == 5), true]);
+                    console.log("[savePatient]", globalDataObj);
+                }, globalTimeout);
+
+            }, globalTimeout);
+        }, (testCount + asyncAccum) * globalTimeout);
+
+        asyncAccum += 2;
+    },
+    function loadEmptyTag() {
+        setTimeout(function() {
+            loadPatient();
+            fetchData();
+            setTimeout(function() {
+                testResults.push(['LOAD EMPTY TAG', true, $.isEmptyObject(globalDataObj)]);
+                console.log("[emptyTag]", globalDataObj);
+
+            }, globalTimeout);
+
+        }, (testCount + asyncAccum) * globalTimeout);
+        asyncAccum++;
+    },
+    function fatPayload() {
+        setTimeout(function() {
+            loadPatient();
+            $("#UUID").val("overwhelmProfile2");
+            fetchData();
+            // Wait for fetch
+            setTimeout(function() {
+                $("#additionalTab").click();
+                $("#doctorsNotes").val(randomString(10000000));
+                savePatient(false);
+                // Wait for save
+                setTimeout(function(){
+                    testResults.push(['FAT PAYLOAD', 0, 0]);
+                    console.log("[fatPayload]", globalDataObj);
+
+                }, globalTimeout);
+            }, globalTimeout);
+        }, (testCount + asyncAccum) * globalTimeout);
+
+        asyncAccum+=2;
     }
-
 ];
-
+// src: http://stackoverflow.com/questions/10726909/random-alpha-numeric-string-in-javascript
+function randomString(length, chars) {
+    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 
 // 
 // $(document).ready(function() {
