@@ -1,7 +1,8 @@
 /* globals Materialize, sha256, loadPatient, clearPage, getSessionKey, photoMaxH, photoMaxW, fetchData, testingState*/
 var testingState = {
     historyEntries: 0,
-    diagnosticEntries: 0
+    diagnosticEntries: 0,
+    saveStatus: "inactive"
 }; // For tracking page state
 var globalDataObj = {};
 var server = document.location.protocol + '//' + document.location.hostname + ':3000/';
@@ -13,6 +14,7 @@ $('#serverAddress').val(server);
  */
 function savePatient(notify) {
     "use strict";
+    testingState.saveStatus = "processing";
     // load into globalDataObj
     // generic field pickup -- assumes all fields have an ID that is the same as the template name of the fields
     // also assumes each field has the class dataEntry
@@ -38,12 +40,15 @@ function savePatient(notify) {
                 loadPatient();
                 clearPage();
                 Materialize.toast("Your session has expired.", 5000);
+                testingState.saveStatus = "failure";
                 return;
             }
 
             if (notify) {
                 Materialize.toast("Patient saved.", 5000);
             }
+            testingState.saveStatus = "success";
+            return;
         });
 }
 

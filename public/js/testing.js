@@ -1,5 +1,6 @@
-globalTimeout = 500;
-asyncAccum = 1;
+globalTimeout = 500; // 500 occasionally fails due to latency
+asyncAccum = 1; // Increment this for each nested setTimeout call
+
 var tests = [
     function loadTestProfile() {
         loadPatient();
@@ -18,7 +19,7 @@ var tests = [
 
             setTimeout(function() {
                 testResults.push(['DECRYPT TAG', $("#UUID").val(), "36c8b701-fad4-40fa-83c7-9a525ad7a152"]);
-                console.log("[decrpytTag]", globalDataObj);
+                console.log("[decryptTag]", globalDataObj);
             }, globalTimeout);
         }, (testCount + asyncAccum) * globalTimeout);
         asyncAccum++;
@@ -121,34 +122,43 @@ var tests = [
     function fatPayload() {
         setTimeout(function() {
             loadPatient();
-            $("#UUID").val("overwhelmProfile2");
+            $("#UUID").val("payload");
             fetchData();
             // Wait for fetch
             setTimeout(function() {
                 $("#additionalTab").click();
-                $("#doctorsNotes").val(randomString(10000000));
+                $("#doctorsNotes").val(randomString(1000000));
                 savePatient(false);
                 // Wait for save
-                setTimeout(function(){
-                    testResults.push(['FAT PAYLOAD', 0, 0]);
+                setTimeout(function() {
+                    testResults.push(['FAT PAYLOAD', testingState.saveStatus, "success"]);
                     console.log("[fatPayload]", globalDataObj);
 
-                }, globalTimeout);
+                }, 2 * globalTimeout);
             }, globalTimeout);
         }, (testCount + asyncAccum) * globalTimeout);
 
-        asyncAccum+=2;
+        asyncAccum += 3;
+    },
+    function getURI() {
+        setTimeout(function() {
+            loadPatient();
+            // ~40 characters should suffice
+            var photoURI = getPhotoDataURI().substring(0, 40);
+
+            testResults.push(['PHOTO URI', photoURI, "data:image/png;base64,iVBORw0KGgoAAAANSU"]);
+        }, (testCount + asyncAccum) * globalTimeout);
     }
 ];
 // src: http://stackoverflow.com/questions/10726909/random-alpha-numeric-string-in-javascript
-function randomString(length, chars) {
+function randomString(length) {
     var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var result = '';
     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
 }
 
-// 
+
 // $(document).ready(function() {
 //     runTests(tests);
 // });
