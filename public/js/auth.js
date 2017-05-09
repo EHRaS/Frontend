@@ -1,4 +1,4 @@
-/* globals Materialize, sha256, globalDataObj: true, populatePage, server, clearPage */
+/* globals Materialize, sha256, globalDataObj: true, populatePage, server, clearPage, testingState */
 
 /**
  * Initialize patient load screen and clear all previous data.
@@ -92,7 +92,7 @@ function fetchData() {
                         // not authorized
                         Materialize.toast("There was a data load issue; please try again.", 5000);
                         return;
-                    }else{
+                    } else {
                         testingState.dataReceived = true;
                     }
 

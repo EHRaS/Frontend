@@ -75,7 +75,6 @@ function populatePage() {
 
     // clear out image data to conserve payload size
     delete(globalDataObj.photoURI);
-
 }
 
 /**

@@ -150,7 +150,6 @@ function insertDiagnostic(title, date, url, detail, datatype) {
     $('#diagnosticCollapseClick').click(); // collapse the accordion. Gimpy, I know.
 
     testingState.diagnosticEntries += 1;
-
 }
 
 /**
@@ -167,7 +166,6 @@ function saveNewHistory() {
     insertHistory(text, color, date);
     Materialize.toast('History record added', 2000);
     savePatient(false);
-
 }
 
 /**
