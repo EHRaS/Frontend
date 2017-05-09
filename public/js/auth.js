@@ -106,7 +106,7 @@ function fetchData() {
 }
 
 // handle manual UUID entry
-$('#UUID').keydown(function() {
+$('#UUID').keyup(function() {
     "use strict";
     if ($('#UUID').val().length > 0) {
         $('#useTagButton').removeClass('disabled');
