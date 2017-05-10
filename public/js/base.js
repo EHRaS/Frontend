@@ -114,7 +114,7 @@ function uploadProfile() {
  */
 function insertHistory(text, color, date) {
     "use strict";
-    var itemHTML = $.parseHTML('<li class="collection-item historyEntry"><span class="badge lighten-4 ' + color + '">' + date + '</span><a onclick="this.parentNode.remove(); Materialize.toast("History entry deleted.", 2000); savePatient(false);"><i class="material-icons historyDeleteIcon">delete</i></a><span>' + text + '</span></li>');
+    var itemHTML = $.parseHTML('<li class="collection-item historyEntry"><span class="badge lighten-4 ' + color + '">' + date + '</span><a onclick="this.parentNode.remove(); Materialize.toast(\'History entry deleted.\', 2000); savePatient(false);"><i class="material-icons historyDeleteIcon">delete</i></a><span>' + text + '</span></li>');
 
     $('#historyContainer').append(itemHTML); // place it
 
