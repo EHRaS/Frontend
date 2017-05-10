@@ -188,11 +188,23 @@ function saveNewDiagnostic() {
 
 $(document).ready(function() {
     "use strict";
-    $(".button-collapse").sideNav();
+    $('.button-collapse').sideNav();
 
     // check for auto load
     if (location.hash.length > 0) {
         $('#UUID').val(location.hash.substring(1));
         fetchData();
     }
+
+    // listen for enter in NFC input field
+    $('#UUID').keyup(function(event) {
+        if (event.keyCode === 13) {
+            fetchData();
+        }
+    });
+
+    // focus UUID input with a delay for Materialize rendering
+    setTimeout(function() {
+        document.getElementById('UUID').focus();
+    }, 200);
 });
