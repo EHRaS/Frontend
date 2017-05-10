@@ -6,7 +6,7 @@
  */
 function fullTagDetected(cryptedContents) {
     "use strict";
-    Materialize.toast('Decrypting tag...', 2000);
+    Materialize.toast('Decrypting tag...', 1000);
 
     var jqxhr = $.post(server + 'uuid/decrypt', {
             uuid: cryptedContents
