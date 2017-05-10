@@ -72,9 +72,6 @@ function populatePage() {
     pageActive = true;
     registerEditListeners();
     loadImage();
-
-    // clear out image data to conserve payload size
-    delete(globalDataObj.photoURI);
 }
 
 /**
