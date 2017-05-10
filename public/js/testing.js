@@ -169,9 +169,10 @@ function debugKepressListener(e) {
     if (evtObj.altKey) {
         switch (evtObj.keyCode) {
             case 49: // number 1
-                Materialize.toast('Decrypting tag...', 1000);
-                Materialize.toast('Tag decrypted', 1000);
-                document.activeElement.value = '110ec58a-a0f2-4ac4-8393-c8deadbeef66';
+                Materialize.toast('Decrypting tag...', 2000);
+                Materialize.toast('Tag decrypted', 2000);
+                $('#UUID').val('110ec58a-a0f2-4ac4-8393-c8deadbeef66');
+                $('#useTagButton').removeClass('disabled');
                 break;
 
             case 50: // number 2
