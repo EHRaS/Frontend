@@ -38,6 +38,9 @@ iframe.activator{
     margin-bottom: 15px;
 }
 
+.card .card-content p {
+    line-height: 10px;
+}
 
 @media screen and (max-width: 600px) and (orientation: portrait){
     #photoCanvas{
